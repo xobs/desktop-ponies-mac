@@ -17,9 +17,7 @@
         return nil;
     _pony = [pony retain];
     srandomdev();
-    
-    [self startRandomBehavior];
-    
+        
     return self;
 }
 
@@ -29,20 +27,26 @@
     NSUInteger totalBehaviors = [behaviors count];
     NBPonyBehavior *newBehavior = nil;
     
-    if ([[_pony name] isEqualToString:@"Rainbow Dash"])
-        return _behavior = [_pony behaviorNamed:@"drag"];
-    
     for (tries=0; tries<MAX_TRIES && newBehavior == nil; tries++) {
         double value = random()/(double)RAND_MAX*[_pony behaviorProbabilityTotal];
         double count;
         unsigned int i;
+        NBPonyBehavior *behavior;
         for (i=0, count=0; i<totalBehaviors && count<value; i++)
             count += [[behaviors objectAtIndex:i] probability];
         if (i>=totalBehaviors) {
             NSLog(@"Warning: Exceeded total behaviors");
             i=0;
         }
-        if ([[behaviors objectAtIndex:i] shouldSkip])
+        
+        behavior = [behaviors objectAtIndex:i];
+        if ([behavior shouldSkip])
+            continue;
+        
+        if ([behavior movementFlags] >= 8)
+            continue;
+        
+        if (![_delegate wouldFitOnScreen:[[behavior leftImage] size] forInstance:self])
             continue;
         
         newBehavior = [behaviors objectAtIndex:i];
@@ -67,8 +71,59 @@
     return _behavior;
 }
 
+
 - (void)didChangeBehavior
 {
+    // Recalculate movement data.
+    int flags = [_behavior movementFlags];
+    // Flags indicate it's either "no movement" or "sleeping/mouseover/dragged"
+    if (!(flags&MOVEMENT_ALL)) {
+        vert = none;
+        
+        horiz = left;
+        if (random()&1)
+            horiz = right;
+        angle = 0;
+        speed = 0;
+    }
+    else {
+        int choice;
+        // Find a random number between 0 and 2.
+        do {
+            choice = random()&3;
+        } while (!choice);
+        
+        // Determine which movement to make (horizontal, vertical, or diagonal).
+        while (!(choice & flags)) {
+            choice <<= 1;
+            if (choice > MOVEMENT_ALL)
+                choice = 1;
+        }
+        
+        horiz = none;
+        vert = none;
+        angle = M_PI_2 * random() / (double)RAND_MAX;
+        
+        if (choice == MOVEMENT_VERT)
+            angle = M_PI_2;
+        if (choice == MOVEMENT_HORIZ)
+            angle = 0;
+
+        if (choice & MOVEMENT_VERT_DIAG)
+            vert = (random()&1)?up:down;
+        
+        if (choice & MOVEMENT_HORIZ_DIAG)
+            horiz = (random()&1)?left:right;
+        
+        NSLog(@"Now pointing %s and %s, angle %lf", vert==up?"up":(vert==down?"down":"none"), horiz==left?"left":(horiz==right?"right":"none"), angle);
+
+        speed = [_behavior speed] * [_pony scale];
+    }
+    speed = speed * speed;
+    
+    [_delegate invalidateGraphicsForInstance:self];
+    
+    // Add a timer to move to a new behavior after this one ends.
     NSTimeInterval timeTillNewBehavior = [_behavior randomTimeout];
     if (_newBehaviorTimeout)
         [_newBehaviorTimeout invalidate];
@@ -82,9 +137,88 @@
 
 - (void)behaviorExpired:(id)sender
 {
-    if (_delegate && [_delegate respondsToSelector:@selector(behaviorTimeoutExpired:)])
-        [_delegate behaviorTimeoutExpired:self];
+    [_delegate behaviorTimeoutExpiredForInstance:self];
+}
 
+#pragma mark -
+#pragma mark Tick
+
+- (void)tick
+{
+    if (horiz || vert) {
+        NSSize movement = NSMakeSize(sqrt(speed*2)*horiz*cos(angle), sqrt(speed*2)*vert*sin(angle));
+    
+        if ([_delegate shouldBounce:movement forInstance:self]) {
+            NSSize newMovement = [_delegate makeBestBounce:movement forInstance:self];
+        
+            if (newMovement.width != movement.width)
+                horiz *= -1;
+            if (newMovement.height != movement.height)
+                vert *= -1;
+        
+            movement = NSMakeSize(sqrt(speed*2)*horiz*cos(angle), sqrt(speed*2)*vert*sin(angle));
+
+            [_delegate invalidateGraphicsForInstance:self];
+            NSLog(@"Now pointing %s and %s, angle %lf", vert==up?"up":(vert==down?"down":"none"), horiz==left?"left":(horiz==right?"right":"none"), angle);
+        }
+        [_delegate performMovement:movement forInstance:self];
+    }
+}
+
+#pragma mark -
+#pragma mark Mouse interaction
+- (void)beginDragAtPoint:(NSPoint)point
+{
+    old_speed = speed;
+    old_behavior = _behavior;
+    old_vert = vert;
+    
+    speed = 0;
+    vert = none;
+    for (NBPonyBehavior *b in [_pony behaviorsAsArray]) {
+        if ([b movementFlags] == MOVEMENT_DRAGGING) {
+            _behavior = b;
+            break;
+        }
+    }
+    [_newBehaviorTimeout invalidate];
+    _newBehaviorTimeout = nil;
+    [_delegate invalidateGraphicsForInstance:self];
+    [_delegate moveToPoint:point forInstance:self];
+}
+
+- (void)endDragAtPoint:(NSPoint)point
+{
+    [self startRandomBehavior];
+}
+
+- (void)dragToPoint:(NSPoint)point
+{
+    [_delegate moveToPoint:point forInstance:self];    
+}
+
+- (void)mouseOverAtPoint:(NSPoint)point
+{
+    old_speed = speed;
+    old_behavior = _behavior;
+    old_vert = vert;
+    
+    speed = 0;
+    vert = none;
+    for (NBPonyBehavior *b in [_pony behaviorsAsArray]) {
+        if ([b movementFlags] == MOVEMENT_MOUSEOVER) {
+            _behavior = b;
+            break;
+        }
+    }
+    [_newBehaviorTimeout invalidate];
+    _newBehaviorTimeout = nil;
+    [_delegate invalidateGraphicsForInstance:self];
+}
+
+- (void)mouseOutAtPoint:(NSPoint)point
+{
+    [self startRandomBehavior];
 }
 
 #pragma mark -
@@ -101,9 +235,44 @@
     return _behavior;
 }
 
+- (NSString *)imagePath
+{
+    if (horiz == left)
+        return [_behavior leftImagePath];
+    return [_behavior rightImagePath];
+}
+
+- (NSImage *)image
+{
+    if (horiz == left)
+        return [_behavior leftImage];
+    return [_behavior rightImage];
+}
+
+- (NSData *)imageData
+{
+    if (horiz == left)
+        return [_behavior leftImageData];
+    return [_behavior rightImageData];
+}
+
+- (NSPoint)imageCenter
+{
+    if (horiz == left)
+        return [_behavior leftImageCenter];
+    return [_behavior rightImageCenter];
+}
+
 - (NBPony *)pony
 {
     return _pony;
 }
 
+- (int)facing
+{
+    return horiz;
+}
+
 @end
+
+

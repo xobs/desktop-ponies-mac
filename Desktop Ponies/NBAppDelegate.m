@@ -25,17 +25,40 @@
  
     NSLog(@"Pony collection: %@", ponyCollection);
     
-    NBPony *fluttershy = [ponyCollection ponyNamed:@"Fluttershy"];
-    NBPonyBehavior *behavior = [fluttershy behaviorNamed:@"walk"];
-    NSImage *left = [behavior leftImage];
-    [testOutput setObjectValue:left];
+
+    NSArray *testPonies = [NSArray arrayWithObjects:@"Rainbow Dash", @"Pinkie Pie", @"Fluttershy",
+                           @"Twilight Sparkle", @"Rarity", @"Applejack", @"Derpy Hooves", nil];
     
-    testWindow = [[NBPonyWindow alloc] initWithContentRect:NSMakeRect(100, 100, 110, 110)
-                                                 styleMask:NSBorderlessWindowMask
-                                                   backing:NSBackingStoreBuffered
-                                                     defer:YES];
-    [testWindow setPonyInstance:[[NBPonyInstance alloc] initWithPony:[ponyCollection ponyNamed:@"Rainbow Dash"]]];
-    [testWindow makeKeyAndOrderFront:self];
+    windows = [[NSMutableArray alloc] init];
+    for (NSString *name in testPonies) {
+        NBPony *pony = [ponyCollection ponyNamed:name];
+        if (!pony) {
+            NSLog(@"Warning: No pony named %@", name);
+            continue;
+        }
+        
+        NBPonyWindow *tmp = [[NBPonyWindow alloc] initWithContentRect:NSMakeRect(100, 500, 50, 50)
+                                                            styleMask:NSBorderlessWindowMask
+                                                              backing:NSBackingStoreBuffered
+                                                                defer:YES];
+        [tmp setPonyInstance:[[NBPonyInstance alloc] initWithPony:pony]];
+        [tmp makeKeyAndOrderFront:self];
+        [windows addObject:tmp];
+    }
+
+    
+    tickTimer = [NSTimer scheduledTimerWithTimeInterval:0.030
+                                                 target:self
+                                               selector:@selector(doTick:)
+                                               userInfo:nil
+                                                repeats:YES];
+}
+
+- (void)doTick:(id)sender
+{
+    for (NBPonyWindow *w in windows) {
+        [w doTick];
+    }
 }
 
 @end

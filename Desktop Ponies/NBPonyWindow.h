@@ -7,14 +7,24 @@
 //
 
 #import <AppKit/AppKit.h>
+#import <WebKit/WebKit.h>
 #import "NBPony.h"
 #import "NBPonyInstance.h"
 
 @interface NBPonyWindow : NSWindow {
     NBPonyInstance *_instance;
-    NSImageView *ponyView;
+    WebView *ponyView;
 }
 
 - (void)setPonyInstance:(NBPonyInstance *)instance;
+- (void)doTick;
+
+- (void)behaviorTimeoutExpiredForInstance:(NBPonyInstance *)instance;
+- (void)performMovement:(NSSize)delta forInstance:(NBPonyInstance *)instance;
+- (BOOL)shouldBounce:(NSSize)delta forInstance:(NBPonyInstance *)instance;
+- (NSSize)makeBestBounce:(NSSize)delta forInstance:(NBPonyInstance *)instance;
+- (void)invalidateGraphicsForInstance:(NBPonyInstance *)instance;
+- (BOOL)wouldFitOnScreen:(NSSize)newSize forInstance:(NBPonyInstance *)instance;
+- (void)moveToPoint:(NSPoint)point forInstance:(NBPonyInstance *)instance;
 
 @end

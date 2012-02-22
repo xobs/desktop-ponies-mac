@@ -156,16 +156,28 @@ enum field_names {
         _rightImageCenter = NSMakePoint(-1, -1);
     
     
-    if ([array count] > left_image_path)
-        _leftImage = [[NSImage alloc] initByReferencingFile:[path stringByAppendingPathComponent:[array objectAtIndex:left_image_path]]];
-    else
+    if ([array count] > left_image_path) {
+        _leftImagePath = [[path stringByAppendingPathComponent:[array objectAtIndex:left_image_path]] retain];
+        _leftImage = [[NSImage alloc] initWithContentsOfFile:_leftImagePath];
+        _leftImageData = [[NSData alloc] initWithContentsOfFile:_leftImagePath];
+    }
+    else {
         _leftImage = nil;
+        _leftImagePath = nil;
+        _leftImageData = nil;
+    }
 
     
-    if ([array count] > right_image_path)
-        _rightImage = [[NSImage alloc] initByReferencingFile:[path stringByAppendingPathComponent:[array objectAtIndex:right_image_path]]];
-    else
+    if ([array count] > right_image_path) {
+        _rightImagePath = [[path stringByAppendingPathComponent:[array objectAtIndex:right_image_path]] retain];
+        _rightImage = [[NSImage alloc] initWithContentsOfFile:_rightImagePath];
+        _rightImageData = [[NSData alloc] initWithContentsOfFile:_rightImagePath];
+    }
+    else {
         _rightImage = nil;
+        _rightImagePath = nil;
+        _rightImageData = nil;
+    }
     
     if ([array count] > max_duration)
         _maxDuration = [[array objectAtIndex:max_duration] doubleValue];
@@ -205,6 +217,15 @@ enum field_names {
     return _name;
 }
 
+- (NSString *)leftImagePath
+{
+    return _leftImagePath;
+}
+- (NSString *)rightImagePath
+{
+    return _rightImagePath;
+}
+
 - (NSImage *)leftImage
 {
     return _leftImage;
@@ -215,14 +236,44 @@ enum field_names {
     return _rightImage;
 }
 
+- (NSData *)leftImageData
+{
+    return _leftImageData;
+}
+
+- (NSData *)rightImageData
+{
+    return _rightImageData;
+}
+
+- (NSPoint)leftImageCenter
+{
+    return _leftImageCenter;
+}
+
+- (NSPoint)rightImageCenter
+{
+    return _rightImageCenter;
+}
+
 - (double)probability
 {
     return _probability;
 }
 
+- (double)speed
+{
+    return _speed;
+}
+
 - (BOOL)shouldSkip
 {
     return _skip;
+}
+
+- (int)movementFlags
+{
+    return _movementType;
 }
 
 - (double)randomTimeout
@@ -232,7 +283,6 @@ enum field_names {
         NSLog(@"Warning: Somehow selected a duration less than _minDuration (%lf vs %lf)", t, _minDuration);
     if (t > _maxDuration)
         NSLog(@"Warning: Somehow selected a duration greater than _maxDuration (%lf vs %lf)", t, _maxDuration);
-    NSLog(@"Selected a timeout of %lf from a range of %lf-%lf", t, _minDuration, _maxDuration);
     return t;
 }
 

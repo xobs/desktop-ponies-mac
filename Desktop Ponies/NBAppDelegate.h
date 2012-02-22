@@ -12,10 +12,12 @@
 
 @interface NBAppDelegate : NSObject <NSApplicationDelegate> {
     NBPonyCollection *ponyCollection;
-    NBPonyWindow *testWindow;
+    NSMutableArray *windows;
     IBOutlet NSImageView *testOutput;
+    NSTimer *tickTimer;
 }
 
 @property (assign) IBOutlet NSWindow *window;
+- (void)doTick:(id)sender;
 
 @end

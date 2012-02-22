@@ -24,6 +24,8 @@
 		9B7A418B14F4C55500E321DB /* NBPonyBehavior.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7A418A14F4C55400E321DB /* NBPonyBehavior.m */; };
 		9B7A418F14F4EB5100E321DB /* NBPonyWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7A418E14F4EB5100E321DB /* NBPonyWindow.m */; };
 		9B7A419214F4F89B00E321DB /* NBPonyInstance.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7A419114F4F89B00E321DB /* NBPonyInstance.m */; };
+		9B7A419414F50EC000E321DB /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B7A419314F50EC000E321DB /* QTKit.framework */; };
+		9B7A419A14F51EA100E321DB /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B7A419914F51EA100E321DB /* WebKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +72,8 @@
 		9B7A418E14F4EB5100E321DB /* NBPonyWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBPonyWindow.m; sourceTree = "<group>"; };
 		9B7A419014F4F89B00E321DB /* NBPonyInstance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBPonyInstance.h; sourceTree = "<group>"; };
 		9B7A419114F4F89B00E321DB /* NBPonyInstance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBPonyInstance.m; sourceTree = "<group>"; };
+		9B7A419314F50EC000E321DB /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = ../../../../System/Library/Frameworks/QTKit.framework; sourceTree = "<group>"; };
+		9B7A419914F51EA100E321DB /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = ../../../../System/Library/Frameworks/WebKit.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +82,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				9B7A414A14F4AC8F00E321DB /* Cocoa.framework in Frameworks */,
+				9B7A419414F50EC000E321DB /* QTKit.framework in Frameworks */,
+				9B7A419A14F51EA100E321DB /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,6 +131,8 @@
 		9B7A414B14F4AC8F00E321DB /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9B7A419914F51EA100E321DB /* WebKit.framework */,
+				9B7A419314F50EC000E321DB /* QTKit.framework */,
 				9B7A414C14F4AC8F00E321DB /* AppKit.framework */,
 				9B7A414D14F4AC8F00E321DB /* CoreData.framework */,
 				9B7A414E14F4AC8F00E321DB /* Foundation.framework */,
@@ -135,11 +143,11 @@
 		9B7A414F14F4AC8F00E321DB /* Desktop Ponies */ = {
 			isa = PBXGroup;
 			children = (
+				9B7A415B14F4AC8F00E321DB /* NBAppDelegate.h */,
+				9B7A415C14F4AC8F00E321DB /* NBAppDelegate.m */,
 				9B7A418C14F4EB2700E321DB /* Ini Parsing */,
 				9B7A419014F4F89B00E321DB /* NBPonyInstance.h */,
 				9B7A419114F4F89B00E321DB /* NBPonyInstance.m */,
-				9B7A415B14F4AC8F00E321DB /* NBAppDelegate.h */,
-				9B7A415C14F4AC8F00E321DB /* NBAppDelegate.m */,
 				9B7A418D14F4EB5100E321DB /* NBPonyWindow.h */,
 				9B7A418E14F4EB5100E321DB /* NBPonyWindow.m */,
 				9B7A415E14F4AC8F00E321DB /* MainMenu.xib */,

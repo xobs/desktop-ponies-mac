@@ -45,6 +45,8 @@
     
     fields = [iniFileContents csvRows];
     
+    _scale = 1;
+    
     for (NSArray *columns in fields) {
         NSString *key = [[columns objectAtIndex:0] lowercaseString];
         if ([key hasPrefix:@"'"])
@@ -162,6 +164,11 @@
 - (double)behaviorProbabilityTotal
 {
     return _behaviorProbabilityTotal;
+}
+
+- (double)scale
+{
+    return _scale;
 }
 
 

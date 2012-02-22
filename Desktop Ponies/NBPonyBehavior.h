@@ -8,6 +8,18 @@
 
 #import <Foundation/Foundation.h>
 
+#define MOVEMENT_NONE 0
+#define MOVEMENT_HORIZ 1
+#define MOVEMENT_VERT 2
+#define MOVEMENT_DIAG 4
+#define MOVEMENT_MOUSEOVER 8
+#define MOVEMENT_SLEEP 16
+#define MOVEMENT_DRAGGING 32
+#define MOVEMENT_HORIZ_VERT (MOVEMENT_HORIZ | MOVEMENT_VERT)
+#define MOVEMENT_ALL (MOVEMENT_HORIZ | MOVEMENT_VERT | MOVEMENT_DIAG)
+#define MOVEMENT_VERT_DIAG (MOVEMENT_VERT | MOVEMENT_DIAG)
+#define MOVEMENT_HORIZ_DIAG (MOVEMENT_HORIZ | MOVEMENT_DIAG)
+
 @interface NBPonyBehavior : NSObject {
     NSString *_name;
     
@@ -25,17 +37,29 @@
     NSString *_followStoppedBehavior, *_followMovingBehavior;
     NSPoint _rightImageCenter, _leftImageCenter;
     
+    NSString *_leftImagePath, *_rightImagePath;
     NSImage *_leftImage, *_rightImage;
+    NSData *_leftImageData, *_rightImageData;
 }
 
 + (NBPonyBehavior *)arrayToPonyBehavior:(NSArray *)array path:(NSString *)path;
 - (id)initWithArray:(NSArray *)array path:(NSString *)path;
 
 - (NSString *)name;
+- (NSString *)leftImagePath;
+- (NSString *)rightImagePath;
 - (NSImage *)leftImage;
 - (NSImage *)rightImage;
+- (NSData *)leftImageData;
+- (NSData *)rightImageData;
+- (NSPoint)leftImageCenter;
+- (NSPoint)rightImageCenter;
+
 - (double)probability;
+- (double)speed;
 - (double)randomTimeout;
 - (BOOL)shouldSkip;
+
+- (int)movementFlags;
 
 @end
