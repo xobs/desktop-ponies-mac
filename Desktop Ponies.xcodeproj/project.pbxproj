@@ -1,0 +1,448 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9B7A414A14F4AC8F00E321DB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B7A414914F4AC8F00E321DB /* Cocoa.framework */; };
+		9B7A415414F4AC8F00E321DB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9B7A415214F4AC8F00E321DB /* InfoPlist.strings */; };
+		9B7A415614F4AC8F00E321DB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7A415514F4AC8F00E321DB /* main.m */; };
+		9B7A415A14F4AC8F00E321DB /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 9B7A415814F4AC8F00E321DB /* Credits.rtf */; };
+		9B7A415D14F4AC8F00E321DB /* NBAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7A415C14F4AC8F00E321DB /* NBAppDelegate.m */; };
+		9B7A416014F4AC8F00E321DB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B7A415E14F4AC8F00E321DB /* MainMenu.xib */; };
+		9B7A416814F4AC8F00E321DB /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B7A416714F4AC8F00E321DB /* SenTestingKit.framework */; };
+		9B7A416914F4AC8F00E321DB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B7A414914F4AC8F00E321DB /* Cocoa.framework */; };
+		9B7A417114F4AC8F00E321DB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9B7A416F14F4AC8F00E321DB /* InfoPlist.strings */; };
+		9B7A417414F4AC8F00E321DB /* Desktop_PoniesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7A417314F4AC8F00E321DB /* Desktop_PoniesTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		9B7A416A14F4AC8F00E321DB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9B7A413C14F4AC8F00E321DB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9B7A414414F4AC8F00E321DB;
+			remoteInfo = "Desktop Ponies";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		9B7A414514F4AC8F00E321DB /* Desktop Ponies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Desktop Ponies.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9B7A414914F4AC8F00E321DB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		9B7A414C14F4AC8F00E321DB /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		9B7A414D14F4AC8F00E321DB /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		9B7A414E14F4AC8F00E321DB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		9B7A415114F4AC8F00E321DB /* Desktop Ponies-Info.plist */ = {isa = PBXFileReference; path = "Desktop Ponies-Info.plist"; sourceTree = "<group>"; };
+		9B7A415314F4AC8F00E321DB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		9B7A415514F4AC8F00E321DB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		9B7A415714F4AC8F00E321DB /* Desktop Ponies-Prefix.pch */ = {isa = PBXFileReference; path = "Desktop Ponies-Prefix.pch"; sourceTree = "<group>"; };
+		9B7A415914F4AC8F00E321DB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		9B7A415B14F4AC8F00E321DB /* NBAppDelegate.h */ = {isa = PBXFileReference; path = NBAppDelegate.h; sourceTree = "<group>"; };
+		9B7A415C14F4AC8F00E321DB /* NBAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NBAppDelegate.m; sourceTree = "<group>"; };
+		9B7A415F14F4AC8F00E321DB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		9B7A416614F4AC8F00E321DB /* Desktop PoniesTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Desktop PoniesTests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9B7A416714F4AC8F00E321DB /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		9B7A416E14F4AC8F00E321DB /* Desktop PoniesTests-Info.plist */ = {isa = PBXFileReference; path = "Desktop PoniesTests-Info.plist"; sourceTree = "<group>"; };
+		9B7A417014F4AC8F00E321DB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		9B7A417214F4AC8F00E321DB /* Desktop_PoniesTests.h */ = {isa = PBXFileReference; path = Desktop_PoniesTests.h; sourceTree = "<group>"; };
+		9B7A417314F4AC8F00E321DB /* Desktop_PoniesTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Desktop_PoniesTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9B7A414214F4AC8F00E321DB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9B7A414A14F4AC8F00E321DB /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9B7A416214F4AC8F00E321DB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9B7A416814F4AC8F00E321DB /* SenTestingKit.framework in Frameworks */,
+				9B7A416914F4AC8F00E321DB /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		9B7A413A14F4AC8F00E321DB = {
+			isa = PBXGroup;
+			children = (
+				9B7A414F14F4AC8F00E321DB /* Desktop Ponies */,
+				9B7A416C14F4AC8F00E321DB /* Desktop PoniesTests */,
+				9B7A414814F4AC8F00E321DB /* Frameworks */,
+				9B7A414614F4AC8F00E321DB /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		9B7A414614F4AC8F00E321DB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9B7A414514F4AC8F00E321DB /* Desktop Ponies.app */,
+				9B7A416614F4AC8F00E321DB /* Desktop PoniesTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9B7A414814F4AC8F00E321DB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9B7A414914F4AC8F00E321DB /* Cocoa.framework */,
+				9B7A416714F4AC8F00E321DB /* SenTestingKit.framework */,
+				9B7A414B14F4AC8F00E321DB /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9B7A414B14F4AC8F00E321DB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9B7A414C14F4AC8F00E321DB /* AppKit.framework */,
+				9B7A414D14F4AC8F00E321DB /* CoreData.framework */,
+				9B7A414E14F4AC8F00E321DB /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		9B7A414F14F4AC8F00E321DB /* Desktop Ponies */ = {
+			isa = PBXGroup;
+			children = (
+				9B7A415B14F4AC8F00E321DB /* NBAppDelegate.h */,
+				9B7A415C14F4AC8F00E321DB /* NBAppDelegate.m */,
+				9B7A415E14F4AC8F00E321DB /* MainMenu.xib */,
+				9B7A415014F4AC8F00E321DB /* Supporting Files */,
+			);
+			path = "Desktop Ponies";
+			sourceTree = "<group>";
+		};
+		9B7A415014F4AC8F00E321DB /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				9B7A415114F4AC8F00E321DB /* Desktop Ponies-Info.plist */,
+				9B7A415214F4AC8F00E321DB /* InfoPlist.strings */,
+				9B7A415514F4AC8F00E321DB /* main.m */,
+				9B7A415714F4AC8F00E321DB /* Desktop Ponies-Prefix.pch */,
+				9B7A415814F4AC8F00E321DB /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		9B7A416C14F4AC8F00E321DB /* Desktop PoniesTests */ = {
+			isa = PBXGroup;
+			children = (
+				9B7A417214F4AC8F00E321DB /* Desktop_PoniesTests.h */,
+				9B7A417314F4AC8F00E321DB /* Desktop_PoniesTests.m */,
+				9B7A416D14F4AC8F00E321DB /* Supporting Files */,
+			);
+			path = "Desktop PoniesTests";
+			sourceTree = "<group>";
+		};
+		9B7A416D14F4AC8F00E321DB /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				9B7A416E14F4AC8F00E321DB /* Desktop PoniesTests-Info.plist */,
+				9B7A416F14F4AC8F00E321DB /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9B7A414414F4AC8F00E321DB /* Desktop Ponies */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9B7A417714F4AC8F00E321DB /* Build configuration list for PBXNativeTarget "Desktop Ponies" */;
+			buildPhases = (
+				9B7A414114F4AC8F00E321DB /* Sources */,
+				9B7A414214F4AC8F00E321DB /* Frameworks */,
+				9B7A414314F4AC8F00E321DB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Desktop Ponies";
+			productName = "Desktop Ponies";
+			productReference = 9B7A414514F4AC8F00E321DB /* Desktop Ponies.app */;
+			productType = "com.apple.product-type.application";
+		};
+		9B7A416514F4AC8F00E321DB /* Desktop PoniesTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9B7A417A14F4AC8F00E321DB /* Build configuration list for PBXNativeTarget "Desktop PoniesTests" */;
+			buildPhases = (
+				9B7A416114F4AC8F00E321DB /* Sources */,
+				9B7A416214F4AC8F00E321DB /* Frameworks */,
+				9B7A416314F4AC8F00E321DB /* Resources */,
+				9B7A416414F4AC8F00E321DB /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9B7A416B14F4AC8F00E321DB /* PBXTargetDependency */,
+			);
+			name = "Desktop PoniesTests";
+			productName = "Desktop PoniesTests";
+			productReference = 9B7A416614F4AC8F00E321DB /* Desktop PoniesTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9B7A413C14F4AC8F00E321DB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
+			buildConfigurationList = 9B7A413F14F4AC8F00E321DB /* Build configuration list for PBXProject "Desktop Ponies" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 9B7A413A14F4AC8F00E321DB;
+			productRefGroup = 9B7A414614F4AC8F00E321DB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				9B7A414414F4AC8F00E321DB /* Desktop Ponies */,
+				9B7A416514F4AC8F00E321DB /* Desktop PoniesTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		9B7A414314F4AC8F00E321DB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9B7A415414F4AC8F00E321DB /* InfoPlist.strings in Resources */,
+				9B7A415A14F4AC8F00E321DB /* Credits.rtf in Resources */,
+				9B7A416014F4AC8F00E321DB /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9B7A416314F4AC8F00E321DB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9B7A417114F4AC8F00E321DB /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		9B7A416414F4AC8F00E321DB /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9B7A414114F4AC8F00E321DB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9B7A415614F4AC8F00E321DB /* main.m in Sources */,
+				9B7A415D14F4AC8F00E321DB /* NBAppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9B7A416114F4AC8F00E321DB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9B7A417414F4AC8F00E321DB /* Desktop_PoniesTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		9B7A416B14F4AC8F00E321DB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9B7A414414F4AC8F00E321DB /* Desktop Ponies */;
+			targetProxy = 9B7A416A14F4AC8F00E321DB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		9B7A415214F4AC8F00E321DB /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9B7A415314F4AC8F00E321DB /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		9B7A415814F4AC8F00E321DB /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9B7A415914F4AC8F00E321DB /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		9B7A415E14F4AC8F00E321DB /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9B7A415F14F4AC8F00E321DB /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		9B7A416F14F4AC8F00E321DB /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9B7A417014F4AC8F00E321DB /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		9B7A417514F4AC8F00E321DB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		9B7A417614F4AC8F00E321DB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		9B7A417814F4AC8F00E321DB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Desktop Ponies/Desktop Ponies-Prefix.pch";
+				INFOPLIST_FILE = "Desktop Ponies/Desktop Ponies-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		9B7A417914F4AC8F00E321DB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Desktop Ponies/Desktop Ponies-Prefix.pch";
+				INFOPLIST_FILE = "Desktop Ponies/Desktop Ponies-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		9B7A417B14F4AC8F00E321DB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Desktop Ponies.app/Contents/MacOS/Desktop Ponies";
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Desktop Ponies/Desktop Ponies-Prefix.pch";
+				INFOPLIST_FILE = "Desktop PoniesTests/Desktop PoniesTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		9B7A417C14F4AC8F00E321DB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Desktop Ponies.app/Contents/MacOS/Desktop Ponies";
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Desktop Ponies/Desktop Ponies-Prefix.pch";
+				INFOPLIST_FILE = "Desktop PoniesTests/Desktop PoniesTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9B7A413F14F4AC8F00E321DB /* Build configuration list for PBXProject "Desktop Ponies" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9B7A417514F4AC8F00E321DB /* Debug */,
+				9B7A417614F4AC8F00E321DB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9B7A417714F4AC8F00E321DB /* Build configuration list for PBXNativeTarget "Desktop Ponies" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9B7A417814F4AC8F00E321DB /* Debug */,
+				9B7A417914F4AC8F00E321DB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		9B7A417A14F4AC8F00E321DB /* Build configuration list for PBXNativeTarget "Desktop PoniesTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9B7A417B14F4AC8F00E321DB /* Debug */,
+				9B7A417C14F4AC8F00E321DB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 9B7A413C14F4AC8F00E321DB /* Project object */;
+}
