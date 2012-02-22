@@ -41,15 +41,22 @@
     return self;
 }
 
-- (void)setPony:(NBPony *)pony
+- (void)setPonyInstance:(NBPonyInstance *)instance
 {
-    if (currentPony)
-        [currentPony release];
-    currentPony = [pony retain];
+    if (_instance)
+        [_instance release];
+    _instance = [instance retain];
+    [_instance setDelegate:self];
 
-    NBPonyBehavior *behavior = [currentPony behaviorNamed:@"walk"];
+    NBPonyBehavior *behavior = [instance behavior];
     NSImage *left = [behavior leftImage];
     [ponyView setObjectValue:left];
 }
+
+- (void)behaviorTimeoutExpired:(NBPonyInstance *)instance
+{
+    [ponyView setObjectValue:[[instance startRandomBehavior] leftImage]];
+}
+
 
 @end

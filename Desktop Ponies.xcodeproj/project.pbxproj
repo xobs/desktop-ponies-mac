@@ -23,6 +23,7 @@
 		9B7A418814F4C3F900E321DB /* NBPonyEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7A418714F4C3F900E321DB /* NBPonyEffect.m */; };
 		9B7A418B14F4C55500E321DB /* NBPonyBehavior.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7A418A14F4C55400E321DB /* NBPonyBehavior.m */; };
 		9B7A418F14F4EB5100E321DB /* NBPonyWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7A418E14F4EB5100E321DB /* NBPonyWindow.m */; };
+		9B7A419214F4F89B00E321DB /* NBPonyInstance.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7A419114F4F89B00E321DB /* NBPonyInstance.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +68,8 @@
 		9B7A418A14F4C55400E321DB /* NBPonyBehavior.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBPonyBehavior.m; sourceTree = "<group>"; };
 		9B7A418D14F4EB5100E321DB /* NBPonyWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBPonyWindow.h; sourceTree = "<group>"; };
 		9B7A418E14F4EB5100E321DB /* NBPonyWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBPonyWindow.m; sourceTree = "<group>"; };
+		9B7A419014F4F89B00E321DB /* NBPonyInstance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBPonyInstance.h; sourceTree = "<group>"; };
+		9B7A419114F4F89B00E321DB /* NBPonyInstance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBPonyInstance.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +136,8 @@
 			isa = PBXGroup;
 			children = (
 				9B7A418C14F4EB2700E321DB /* Ini Parsing */,
+				9B7A419014F4F89B00E321DB /* NBPonyInstance.h */,
+				9B7A419114F4F89B00E321DB /* NBPonyInstance.m */,
 				9B7A415B14F4AC8F00E321DB /* NBAppDelegate.h */,
 				9B7A415C14F4AC8F00E321DB /* NBAppDelegate.m */,
 				9B7A418D14F4EB5100E321DB /* NBPonyWindow.h */,
@@ -306,6 +311,7 @@
 				9B7A418814F4C3F900E321DB /* NBPonyEffect.m in Sources */,
 				9B7A418B14F4C55500E321DB /* NBPonyBehavior.m in Sources */,
 				9B7A418F14F4EB5100E321DB /* NBPonyWindow.m in Sources */,
+				9B7A419214F4F89B00E321DB /* NBPonyInstance.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -13,14 +13,21 @@
     NSString *_name;
     NSArray *_categories;
     NSDictionary *_behaviors;
+    NSArray *_orderedBehaviors;
     NSDictionary *_phrases;
     NSDictionary *_effects;
     double _scale;
+    
+    NSUInteger _behaviorCount;
+    double _behaviorProbabilityTotal;
 }
 
 - (id)initWithPath:(NSString *)path;
 - (NSDictionary *)behaviors;
+- (NSUInteger)behaviorCount;
+- (double)behaviorProbabilityTotal;
 - (NBPonyBehavior *)behaviorNamed:(NSString *)name;
+- (NSArray *)behaviorsAsArray;
 - (NSString *)name;
 
 @end

@@ -8,10 +8,13 @@
 
 #import <AppKit/AppKit.h>
 #import "NBPony.h"
+#import "NBPonyInstance.h"
 
 @interface NBPonyWindow : NSWindow {
-    NBPony *currentPony;
+    NBPonyInstance *_instance;
     NSImageView *ponyView;
 }
+
+- (void)setPonyInstance:(NBPonyInstance *)instance;
 
 @end

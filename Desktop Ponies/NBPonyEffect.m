@@ -37,10 +37,10 @@
     _follows = false;
     
     if ([array count] > 10) {
-        _directionRight = [[array objectAtIndex:7] intValue];
-        _centerRight = [[array objectAtIndex:8] intValue];
-        _directionLeft = [[array objectAtIndex:9] intValue];
-        _centerLeft = [[array objectAtIndex:10] intValue];
+        _directionRight = [self stringToDirection:[array objectAtIndex:7]];
+        _centerRight = [self stringToDirection:[array objectAtIndex:8]];
+        _directionLeft = [self stringToDirection:[array objectAtIndex:9]];
+        _centerLeft = [self stringToDirection:[array objectAtIndex:10]];
     }
     
     if ([array count] > 11) {
@@ -48,6 +48,38 @@
     }
 
     return self;
+}
+
+- (enum PonyEffectDirections)stringToDirection:(NSString *)str
+{
+    str = [[str lowercaseString] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+
+    if ([str isEqualToString:@"center"])
+        return center;
+    else if ([str isEqualToString:@"left"])
+        return left;
+    else if ([str isEqualToString:@"bottom_left"])
+        return bottomLeft;
+    else if ([str isEqualToString:@"bottom"])
+        return bottom;
+    else if ([str isEqualToString:@"bottom_right"])
+        return bottomRight;
+    else if ([str isEqualToString:@"right"])
+        return right;
+    else if ([str isEqualToString:@"top_right"])
+        return topRight;
+    else if ([str isEqualToString:@"top"])
+        return top;
+    else if ([str isEqualToString:@"top_left"])
+        return topLeft;
+    else if ([str isEqualToString:@"any_notcenter"] || [str isEqualToString:@"any-not_center"])
+        return anyNotCenter;
+    else if ([str isEqualToString:@"any"])
+        return any;
+    else {
+        NSLog(@"Unrecognized direction: %@", str);
+        return none;
+    }
 }
 
 - (NSString *)name

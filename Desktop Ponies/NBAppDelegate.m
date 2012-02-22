@@ -7,6 +7,7 @@
 //
 
 #import "NBAppDelegate.h"
+#import "NBPonyInstance.h"
 
 @implementation NBAppDelegate
 
@@ -33,7 +34,7 @@
                                                  styleMask:NSBorderlessWindowMask
                                                    backing:NSBackingStoreBuffered
                                                      defer:YES];
-    [testWindow setPony:[ponyCollection ponyNamed:@"Rainbow Dash"]];
+    [testWindow setPonyInstance:[[NBPonyInstance alloc] initWithPony:[ponyCollection ponyNamed:@"Rainbow Dash"]]];
     [testWindow makeKeyAndOrderFront:self];
 }
 

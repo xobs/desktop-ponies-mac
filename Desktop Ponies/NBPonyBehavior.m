@@ -168,14 +168,23 @@ enum field_names {
         _rightImage = nil;
     
     if ([array count] > max_duration)
-        _maxDuration = [[array objectAtIndex:max_duration] intValue];
+        _maxDuration = [[array objectAtIndex:max_duration] doubleValue];
     else
         _maxDuration = 0;
     
     if ([array count] > min_duration)
-        _minDuration = [[array objectAtIndex:min_duration] intValue];
+        _minDuration = [[array objectAtIndex:min_duration] doubleValue];
     else
         _minDuration = 0;
+    
+    if (_maxDuration < _minDuration)
+    {
+        double t;
+//        NSLog(@"Warning: Broken file.  Min Duration > Max Duration (%lf < %lf)", _maxDuration, _minDuration);
+        t = _minDuration;
+        _minDuration = _maxDuration;
+        _maxDuration = t;
+    }
     
     if ([array count] > speed)
         _speed = [[array objectAtIndex:speed] doubleValue];
@@ -204,6 +213,27 @@ enum field_names {
 - (NSImage *)rightImage
 {
     return _rightImage;
+}
+
+- (double)probability
+{
+    return _probability;
+}
+
+- (BOOL)shouldSkip
+{
+    return _skip;
+}
+
+- (double)randomTimeout
+{
+    double t = (random()/(double)RAND_MAX)*(_maxDuration-_minDuration)+_minDuration;
+    if (t < _minDuration)
+        NSLog(@"Warning: Somehow selected a duration less than _minDuration (%lf vs %lf)", t, _minDuration);
+    if (t > _maxDuration)
+        NSLog(@"Warning: Somehow selected a duration greater than _maxDuration (%lf vs %lf)", t, _maxDuration);
+    NSLog(@"Selected a timeout of %lf from a range of %lf-%lf", t, _minDuration, _maxDuration);
+    return t;
 }
 
 @end

@@ -10,6 +10,21 @@
 #import "NBPonyBehavior.h"
 #import "NBPony.h"
 
+enum PonyEffectDirections {
+    none,
+    bottomRight,
+    bottom,
+    bottomLeft,
+    left,
+    topLeft,
+    top,
+    topRight,
+    right,
+    center,
+    anyNotCenter,
+    any,
+};
+
 @interface NBPonyEffect : NSObject {
     NSString *_name;
     NBPonyBehavior *_behavior;
@@ -17,8 +32,8 @@
     NSImage *_leftImage, *_rightImage;
     double _duration;
     double _delay;
-    int _directionLeft, _directionRight;
-    int _centerLeft, _centerRight;
+    enum PonyEffectDirections _directionLeft, _directionRight;
+    enum PonyEffectDirections _centerLeft, _centerRight;
     BOOL _follows;
     
     NBPony *_pony;
@@ -26,6 +41,7 @@
 
 + (NBPonyEffect *)arrayToPonyEffect:(NSArray *)array path:(NSString *)path;
 - (id)initWithArray:(NSArray *)array path:(NSString *)path;
+- (enum PonyEffectDirections)stringToDirection:(NSString *)str;
 
 // Call this after the pony has been completely loaded in order
 // to resolve the "Behavior" value.  If this returns FALSE, then

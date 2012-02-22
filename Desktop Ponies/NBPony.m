@@ -105,11 +105,18 @@
     
     
     [tempDict removeAllObjects];
+    _behaviorProbabilityTotal = 0;
+    NSMutableArray *tempOrderedBehaviors = [[NSMutableArray alloc] init];
     for (NBPonyBehavior *behavior in behaviorsTemp) {
-        if ([behavior name])
+        if ([behavior name]) {
+            _behaviorProbabilityTotal += [behavior probability];
             [tempDict setObject:behavior forKey:[behavior name]];
+            [tempOrderedBehaviors addObject:behavior];
+        }
     }
     _behaviors = [[NSDictionary alloc] initWithDictionary:tempDict];
+    _orderedBehaviors = [[NSArray alloc] initWithArray:tempOrderedBehaviors];
+    [tempOrderedBehaviors release];
     [behaviorsTemp release];
     
     
@@ -123,6 +130,8 @@
     
     
     [tempDict release];
+    
+    _behaviorCount = [_behaviors count];
     
     return self;
 }
@@ -140,10 +149,27 @@
     return _behaviors;
 }
 
+- (NSArray *)behaviorsAsArray
+{
+    return _orderedBehaviors;
+}
+
+- (NSUInteger)behaviorCount
+{
+    return _behaviorCount;
+}
+
+- (double)behaviorProbabilityTotal
+{
+    return _behaviorProbabilityTotal;
+}
+
+
 - (NBPonyBehavior *)behaviorNamed:(NSString *)name
 {
     return [_behaviors objectForKey:name];
 }
+
 
 @end
 

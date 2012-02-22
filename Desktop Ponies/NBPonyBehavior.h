@@ -15,7 +15,7 @@
     double _speed;
 
     int _movementType;
-    int _maxDuration, _minDuration;
+    double _maxDuration, _minDuration;
     NSString *_linkedBehavior;
     int _speakingStart, _speakingEnd;
     BOOL _skip;
@@ -34,5 +34,8 @@
 - (NSString *)name;
 - (NSImage *)leftImage;
 - (NSImage *)rightImage;
+- (double)probability;
+- (double)randomTimeout;
+- (BOOL)shouldSkip;
 
 @end
