@@ -17,6 +17,12 @@
 		9B7A416914F4AC8F00E321DB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B7A414914F4AC8F00E321DB /* Cocoa.framework */; };
 		9B7A417114F4AC8F00E321DB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9B7A416F14F4AC8F00E321DB /* InfoPlist.strings */; };
 		9B7A417414F4AC8F00E321DB /* Desktop_PoniesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7A417314F4AC8F00E321DB /* Desktop_PoniesTests.m */; };
+		9B7A417F14F4ACD900E321DB /* NBPonyCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7A417E14F4ACD900E321DB /* NBPonyCollection.m */; };
+		9B7A418214F4B7F100E321DB /* NBPony.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7A418114F4B7F100E321DB /* NBPony.m */; };
+		9B7A418514F4C05B00E321DB /* NBPonyPhrase.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7A418414F4C05B00E321DB /* NBPonyPhrase.m */; };
+		9B7A418814F4C3F900E321DB /* NBPonyEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7A418714F4C3F900E321DB /* NBPonyEffect.m */; };
+		9B7A418B14F4C55500E321DB /* NBPonyBehavior.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7A418A14F4C55400E321DB /* NBPonyBehavior.m */; };
+		9B7A418F14F4EB5100E321DB /* NBPonyWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7A418E14F4EB5100E321DB /* NBPonyWindow.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,20 +41,32 @@
 		9B7A414C14F4AC8F00E321DB /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		9B7A414D14F4AC8F00E321DB /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		9B7A414E14F4AC8F00E321DB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		9B7A415114F4AC8F00E321DB /* Desktop Ponies-Info.plist */ = {isa = PBXFileReference; path = "Desktop Ponies-Info.plist"; sourceTree = "<group>"; };
+		9B7A415114F4AC8F00E321DB /* Desktop Ponies-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Desktop Ponies-Info.plist"; sourceTree = "<group>"; };
 		9B7A415314F4AC8F00E321DB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		9B7A415514F4AC8F00E321DB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		9B7A415714F4AC8F00E321DB /* Desktop Ponies-Prefix.pch */ = {isa = PBXFileReference; path = "Desktop Ponies-Prefix.pch"; sourceTree = "<group>"; };
+		9B7A415714F4AC8F00E321DB /* Desktop Ponies-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Desktop Ponies-Prefix.pch"; sourceTree = "<group>"; };
 		9B7A415914F4AC8F00E321DB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
-		9B7A415B14F4AC8F00E321DB /* NBAppDelegate.h */ = {isa = PBXFileReference; path = NBAppDelegate.h; sourceTree = "<group>"; };
+		9B7A415B14F4AC8F00E321DB /* NBAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NBAppDelegate.h; sourceTree = "<group>"; };
 		9B7A415C14F4AC8F00E321DB /* NBAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NBAppDelegate.m; sourceTree = "<group>"; };
 		9B7A415F14F4AC8F00E321DB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		9B7A416614F4AC8F00E321DB /* Desktop PoniesTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Desktop PoniesTests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B7A416714F4AC8F00E321DB /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		9B7A416E14F4AC8F00E321DB /* Desktop PoniesTests-Info.plist */ = {isa = PBXFileReference; path = "Desktop PoniesTests-Info.plist"; sourceTree = "<group>"; };
+		9B7A416E14F4AC8F00E321DB /* Desktop PoniesTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Desktop PoniesTests-Info.plist"; sourceTree = "<group>"; };
 		9B7A417014F4AC8F00E321DB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		9B7A417214F4AC8F00E321DB /* Desktop_PoniesTests.h */ = {isa = PBXFileReference; path = Desktop_PoniesTests.h; sourceTree = "<group>"; };
+		9B7A417214F4AC8F00E321DB /* Desktop_PoniesTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Desktop_PoniesTests.h; sourceTree = "<group>"; };
 		9B7A417314F4AC8F00E321DB /* Desktop_PoniesTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Desktop_PoniesTests.m; sourceTree = "<group>"; };
+		9B7A417D14F4ACD900E321DB /* NBPonyCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBPonyCollection.h; sourceTree = "<group>"; };
+		9B7A417E14F4ACD900E321DB /* NBPonyCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBPonyCollection.m; sourceTree = "<group>"; };
+		9B7A418014F4B7F100E321DB /* NBPony.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBPony.h; sourceTree = "<group>"; };
+		9B7A418114F4B7F100E321DB /* NBPony.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBPony.m; sourceTree = "<group>"; };
+		9B7A418314F4C05B00E321DB /* NBPonyPhrase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBPonyPhrase.h; sourceTree = "<group>"; };
+		9B7A418414F4C05B00E321DB /* NBPonyPhrase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBPonyPhrase.m; sourceTree = "<group>"; };
+		9B7A418614F4C3F900E321DB /* NBPonyEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBPonyEffect.h; sourceTree = "<group>"; };
+		9B7A418714F4C3F900E321DB /* NBPonyEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBPonyEffect.m; sourceTree = "<group>"; };
+		9B7A418914F4C55400E321DB /* NBPonyBehavior.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBPonyBehavior.h; sourceTree = "<group>"; };
+		9B7A418A14F4C55400E321DB /* NBPonyBehavior.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBPonyBehavior.m; sourceTree = "<group>"; };
+		9B7A418D14F4EB5100E321DB /* NBPonyWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBPonyWindow.h; sourceTree = "<group>"; };
+		9B7A418E14F4EB5100E321DB /* NBPonyWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBPonyWindow.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,8 +132,11 @@
 		9B7A414F14F4AC8F00E321DB /* Desktop Ponies */ = {
 			isa = PBXGroup;
 			children = (
+				9B7A418C14F4EB2700E321DB /* Ini Parsing */,
 				9B7A415B14F4AC8F00E321DB /* NBAppDelegate.h */,
 				9B7A415C14F4AC8F00E321DB /* NBAppDelegate.m */,
+				9B7A418D14F4EB5100E321DB /* NBPonyWindow.h */,
+				9B7A418E14F4EB5100E321DB /* NBPonyWindow.m */,
 				9B7A415E14F4AC8F00E321DB /* MainMenu.xib */,
 				9B7A415014F4AC8F00E321DB /* Supporting Files */,
 			);
@@ -151,6 +172,23 @@
 				9B7A416F14F4AC8F00E321DB /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		9B7A418C14F4EB2700E321DB /* Ini Parsing */ = {
+			isa = PBXGroup;
+			children = (
+				9B7A417D14F4ACD900E321DB /* NBPonyCollection.h */,
+				9B7A417E14F4ACD900E321DB /* NBPonyCollection.m */,
+				9B7A418014F4B7F100E321DB /* NBPony.h */,
+				9B7A418114F4B7F100E321DB /* NBPony.m */,
+				9B7A418914F4C55400E321DB /* NBPonyBehavior.h */,
+				9B7A418A14F4C55400E321DB /* NBPonyBehavior.m */,
+				9B7A418614F4C3F900E321DB /* NBPonyEffect.h */,
+				9B7A418714F4C3F900E321DB /* NBPonyEffect.m */,
+				9B7A418314F4C05B00E321DB /* NBPonyPhrase.h */,
+				9B7A418414F4C05B00E321DB /* NBPonyPhrase.m */,
+			);
+			name = "Ini Parsing";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -262,6 +300,12 @@
 			files = (
 				9B7A415614F4AC8F00E321DB /* main.m in Sources */,
 				9B7A415D14F4AC8F00E321DB /* NBAppDelegate.m in Sources */,
+				9B7A417F14F4ACD900E321DB /* NBPonyCollection.m in Sources */,
+				9B7A418214F4B7F100E321DB /* NBPony.m in Sources */,
+				9B7A418514F4C05B00E321DB /* NBPonyPhrase.m in Sources */,
+				9B7A418814F4C3F900E321DB /* NBPonyEffect.m in Sources */,
+				9B7A418B14F4C55500E321DB /* NBPonyBehavior.m in Sources */,
+				9B7A418F14F4EB5100E321DB /* NBPonyWindow.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
