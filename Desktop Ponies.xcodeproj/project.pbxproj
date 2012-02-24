@@ -26,6 +26,7 @@
 		9B7A419214F4F89B00E321DB /* NBPonyInstance.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7A419114F4F89B00E321DB /* NBPonyInstance.m */; };
 		9B7A419414F50EC000E321DB /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B7A419314F50EC000E321DB /* QTKit.framework */; };
 		9B7A419A14F51EA100E321DB /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B7A419914F51EA100E321DB /* WebKit.framework */; };
+		9B7A419D14F686CE00E321DB /* NBPonyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7A419C14F686CE00E321DB /* NBPonyManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +75,8 @@
 		9B7A419114F4F89B00E321DB /* NBPonyInstance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBPonyInstance.m; sourceTree = "<group>"; };
 		9B7A419314F50EC000E321DB /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = ../../../../System/Library/Frameworks/QTKit.framework; sourceTree = "<group>"; };
 		9B7A419914F51EA100E321DB /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = ../../../../System/Library/Frameworks/WebKit.framework; sourceTree = "<group>"; };
+		9B7A419B14F686CE00E321DB /* NBPonyManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBPonyManager.h; sourceTree = "<group>"; };
+		9B7A419C14F686CE00E321DB /* NBPonyManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBPonyManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,6 +148,8 @@
 			children = (
 				9B7A415B14F4AC8F00E321DB /* NBAppDelegate.h */,
 				9B7A415C14F4AC8F00E321DB /* NBAppDelegate.m */,
+				9B7A419B14F686CE00E321DB /* NBPonyManager.h */,
+				9B7A419C14F686CE00E321DB /* NBPonyManager.m */,
 				9B7A418C14F4EB2700E321DB /* Ini Parsing */,
 				9B7A419014F4F89B00E321DB /* NBPonyInstance.h */,
 				9B7A419114F4F89B00E321DB /* NBPonyInstance.m */,
@@ -320,6 +325,7 @@
 				9B7A418B14F4C55500E321DB /* NBPonyBehavior.m in Sources */,
 				9B7A418F14F4EB5100E321DB /* NBPonyWindow.m in Sources */,
 				9B7A419214F4F89B00E321DB /* NBPonyInstance.m in Sources */,
+				9B7A419D14F686CE00E321DB /* NBPonyManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

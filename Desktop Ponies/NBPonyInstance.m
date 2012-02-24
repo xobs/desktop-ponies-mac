@@ -17,8 +17,19 @@
         return nil;
     _pony = [pony retain];
     srandomdev();
+    
+    _window = [[NBPonyWindow alloc] initWithContentRect:NSMakeRect(100, 500, 50, 50)
+                                                        styleMask:NSBorderlessWindowMask
+                                                          backing:NSBackingStoreBuffered
+                                                            defer:YES];
+    [_window setPonyInstance:self];
         
     return self;
+}
+
+- (void)showWindow
+{
+    [_window makeKeyAndOrderFront:self];
 }
 
 - (NBPonyBehavior *)startRandomBehavior {
@@ -40,13 +51,7 @@
         }
         
         behavior = [behaviors objectAtIndex:i];
-        if ([behavior shouldSkip])
-            continue;
-        
-        if ([behavior movementFlags] >= 8)
-            continue;
-        
-        if (![_delegate wouldFitOnScreen:[[behavior leftImage] size] forInstance:self])
+        if (![_window behaviorIsAppropriate:behavior forInstance:self])
             continue;
         
         newBehavior = [behaviors objectAtIndex:i];
@@ -115,13 +120,13 @@
         if (choice & MOVEMENT_HORIZ_DIAG)
             horiz = (random()&1)?left:right;
         
-        NSLog(@"Now pointing %s and %s, angle %lf", vert==up?"up":(vert==down?"down":"none"), horiz==left?"left":(horiz==right?"right":"none"), angle);
+        //NSLog(@"Now pointing %s and %s, angle %lf", vert==up?"up":(vert==down?"down":"none"), horiz==left?"left":(horiz==right?"right":"none"), angle);
 
         speed = [_behavior speed] * [_pony scale];
     }
     speed = speed * speed;
     
-    [_delegate invalidateGraphicsForInstance:self];
+    [_window invalidateGraphicsForInstance:self];
     
     // Add a timer to move to a new behavior after this one ends.
     NSTimeInterval timeTillNewBehavior = [_behavior randomTimeout];
@@ -137,7 +142,7 @@
 
 - (void)behaviorExpired:(id)sender
 {
-    [_delegate behaviorTimeoutExpiredForInstance:self];
+    [_window behaviorTimeoutExpiredForInstance:self];
 }
 
 #pragma mark -
@@ -148,8 +153,8 @@
     if (horiz || vert) {
         NSSize movement = NSMakeSize(sqrt(speed*2)*horiz*cos(angle), sqrt(speed*2)*vert*sin(angle));
     
-        if ([_delegate shouldBounce:movement forInstance:self]) {
-            NSSize newMovement = [_delegate makeBestBounce:movement forInstance:self];
+        if ([_window shouldBounce:movement forInstance:self]) {
+            NSSize newMovement = [_window makeBestBounce:movement forInstance:self];
         
             if (newMovement.width != movement.width)
                 horiz *= -1;
@@ -158,10 +163,10 @@
         
             movement = NSMakeSize(sqrt(speed*2)*horiz*cos(angle), sqrt(speed*2)*vert*sin(angle));
 
-            [_delegate invalidateGraphicsForInstance:self];
-            NSLog(@"Now pointing %s and %s, angle %lf", vert==up?"up":(vert==down?"down":"none"), horiz==left?"left":(horiz==right?"right":"none"), angle);
+            [_window invalidateGraphicsForInstance:self];
+            //NSLog(@"Now pointing %s and %s, angle %lf", vert==up?"up":(vert==down?"down":"none"), horiz==left?"left":(horiz==right?"right":"none"), angle);
         }
-        [_delegate performMovement:movement forInstance:self];
+        [_window performMovement:movement forInstance:self];
     }
 }
 
@@ -169,12 +174,14 @@
 #pragma mark Mouse interaction
 - (void)beginDragAtPoint:(NSPoint)point
 {
+    dragging = YES;
     old_speed = speed;
     old_behavior = _behavior;
     old_vert = vert;
     
     speed = 0;
     vert = none;
+    horiz = none;
     for (NBPonyBehavior *b in [_pony behaviorsAsArray]) {
         if ([b movementFlags] == MOVEMENT_DRAGGING) {
             _behavior = b;
@@ -183,22 +190,25 @@
     }
     [_newBehaviorTimeout invalidate];
     _newBehaviorTimeout = nil;
-    [_delegate invalidateGraphicsForInstance:self];
-    [_delegate moveToPoint:point forInstance:self];
+    [_window invalidateGraphicsForInstance:self];
+    [_window moveToPoint:point forInstance:self];
 }
 
 - (void)endDragAtPoint:(NSPoint)point
 {
+    dragging = NO;
     [self startRandomBehavior];
 }
 
 - (void)dragToPoint:(NSPoint)point
 {
-    [_delegate moveToPoint:point forInstance:self];    
+    [_window moveToPoint:point forInstance:self];    
 }
 
-- (void)mouseOverAtPoint:(NSPoint)point
+- (void)mouseEntered:(NSEvent *)anEvent
 {
+    if (dragging)
+        return;
     old_speed = speed;
     old_behavior = _behavior;
     old_vert = vert;
@@ -213,11 +223,13 @@
     }
     [_newBehaviorTimeout invalidate];
     _newBehaviorTimeout = nil;
-    [_delegate invalidateGraphicsForInstance:self];
+    [_window invalidateGraphicsForInstance:self];
 }
 
-- (void)mouseOutAtPoint:(NSPoint)point
+- (void)mouseExited:(NSEvent *)anEvent
 {
+    if (dragging)
+        return;
     [self startRandomBehavior];
 }
 
@@ -227,7 +239,7 @@
 
 - (void)setDelegate:(id)delegate
 {
-    _delegate = delegate;
+    _window = delegate;
 }
 
 - (NBPonyBehavior *)behavior

@@ -21,6 +21,7 @@
                                       defer:flag]))
         return nil;
     
+    tracking = 0;
     [self setOpaque:NO];
     [self setBackgroundColor:[NSColor clearColor]];
     
@@ -64,10 +65,16 @@
 
 - (void)performMovement:(NSSize)delta forInstance:(NBPonyInstance *)instance
 {
+    if (tracking)
+        [ponyView removeTrackingRect:trackingTag];
+    
     NSRect f = [self frame];
     f.origin.x += delta.width;
     f.origin.y += delta.height;
     [self setFrameOrigin:f.origin];
+    
+    tracking = 1;
+    trackingTag = [ponyView addTrackingRect:[ponyView frame] owner:_instance userData:nil assumeInside:NO];
 }
 
 - (BOOL)wouldFitOnScreen:(NSSize)newSize forInstance:(NBPonyInstance *)instance
@@ -123,7 +130,7 @@
 {
     NSPoint offset = [instance imageCenter];
     point.x -= offset.x;
-    point.y += offset.y - [[instance image] size].height;
+    point.y += offset.y - [[instance image] size].height + [[self contentView] frame].size.height - [self frame].size.height;
     [self setFrameOrigin:point];
 }
 
@@ -136,11 +143,25 @@
     [self setContentSize:[image size]];
 }
 
-
-- (void)doTick
+- (BOOL)behaviorIsAppropriate:(NBPonyBehavior *)behavior forInstance:(NBPonyInstance *)instance
 {
-    [_instance tick];
+    if ([behavior shouldSkip])
+        return NO;
+    
+    if ([behavior movementFlags] >= 8)
+        return NO;
+    
+    if (![self wouldFitOnScreen:[[behavior leftImage] size] forInstance:instance])
+        return NO;
+    
+    return YES;
 }
+
+
+
+
+#pragma mark -
+#pragma mark Cocoa UI overrides
 
 - (BOOL)canBecomeKeyWindow
 {
@@ -158,12 +179,11 @@
         [_instance beginDragAtPoint:[NSEvent mouseLocation]];
     else if ([event type] == NSLeftMouseUp)
         [_instance endDragAtPoint:[NSEvent mouseLocation]];
-    else if ([event type] == NSLeftMouseDragged)
-        [_instance dragToPoint:[NSEvent mouseLocation]];
-    else if ([event type] == NSMouseMoved)
-        [_instance mouseOverAtPoint:[NSEvent mouseLocation]];
-    else if ([event type] == NSMouseExited)
-        [_instance mouseOutAtPoint:[NSEvent mouseLocation]];
+//    else if ([event type] == NSLeftMouseDragged)
+//        NSLog(@"Mouse dragged: %@", event);
+//    else if ([event type] == NSMouseMoved)
+//        NSLog(@"Mouse move event: %@", event);
+
     else
         [super sendEvent:event];
 }

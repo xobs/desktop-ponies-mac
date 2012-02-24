@@ -8,16 +8,22 @@
 
 #import <AppKit/AppKit.h>
 #import <WebKit/WebKit.h>
+
+
 #import "NBPony.h"
 #import "NBPonyInstance.h"
+
+@class NBPonyInstance;
 
 @interface NBPonyWindow : NSWindow {
     NBPonyInstance *_instance;
     WebView *ponyView;
+    
+    int tracking;
+    NSTrackingRectTag trackingTag;
 }
 
 - (void)setPonyInstance:(NBPonyInstance *)instance;
-- (void)doTick;
 
 - (void)behaviorTimeoutExpiredForInstance:(NBPonyInstance *)instance;
 - (void)performMovement:(NSSize)delta forInstance:(NBPonyInstance *)instance;

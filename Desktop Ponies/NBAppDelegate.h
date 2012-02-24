@@ -9,11 +9,11 @@
 #import <Cocoa/Cocoa.h>
 #import "NBPonyCollection.h"
 #import "NBPonyWindow.h"
+#import "NBPonyManager.h"
 
 @interface NBAppDelegate : NSObject <NSApplicationDelegate> {
     NBPonyCollection *ponyCollection;
-    NSMutableArray *windows;
-    IBOutlet NSImageView *testOutput;
+    NBPonyManager *manager;
     NSTimer *tickTimer;
 }
 

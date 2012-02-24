@@ -7,7 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+
+
 #import "NBPony.h"
+#import "NBPonyWindow.h"
+
+@class NBPonyInstance;
+@class NBPonyWindow;
 
 #define none 0
 #define left -1
@@ -18,7 +24,6 @@
 @interface NBPonyInstance : NSObject {
     NBPony *_pony;
     NBPonyBehavior *_behavior;
-    id _delegate;
     NSTimer *_newBehaviorTimeout;
     
     int horiz;
@@ -30,6 +35,9 @@
     
     double angle, realAngle;
     double speed;
+    
+    NBPonyWindow *_window;
+    BOOL dragging;
 }
 
 - (NBPonyInstance *)initWithPony:(NBPony *)pony;
@@ -52,8 +60,10 @@
 - (void)beginDragAtPoint:(NSPoint)point;
 - (void)endDragAtPoint:(NSPoint)point;
 - (void)dragToPoint:(NSPoint)point;
-- (void)mouseOverAtPoint:(NSPoint)point;
-- (void)mouseOutAtPoint:(NSPoint)point;
+- (void)mouseEntered:(NSEvent *)event;
+- (void)mouseExited:(NSEvent *)anEvent;
+
+- (void)showWindow;
 
 @end
 
@@ -67,5 +77,7 @@
 - (void)invalidateGraphicsForInstance:(NBPonyInstance *)instance;
 - (BOOL)wouldFitOnScreen:(NSSize)newSize forInstance:(NBPonyInstance *)instance;
 - (void)moveToPoint:(NSPoint)point forInstance:(NBPonyInstance *)instance;
+
+- (BOOL)behaviorIsAppropriate:(NBPonyBehavior *)behavior forInstance:(NBPonyInstance *)instance;
 
 @end

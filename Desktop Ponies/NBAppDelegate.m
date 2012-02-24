@@ -25,26 +25,12 @@
  
     NSLog(@"Pony collection: %@", ponyCollection);
     
-
+    // Add all these ponies to the manager
     NSArray *testPonies = [NSArray arrayWithObjects:@"Rainbow Dash", @"Pinkie Pie", @"Fluttershy",
                            @"Twilight Sparkle", @"Rarity", @"Applejack", @"Derpy Hooves", nil];
-    
-    windows = [[NSMutableArray alloc] init];
-    for (NSString *name in testPonies) {
-        NBPony *pony = [ponyCollection ponyNamed:name];
-        if (!pony) {
-            NSLog(@"Warning: No pony named %@", name);
-            continue;
-        }
-        
-        NBPonyWindow *tmp = [[NBPonyWindow alloc] initWithContentRect:NSMakeRect(100, 500, 50, 50)
-                                                            styleMask:NSBorderlessWindowMask
-                                                              backing:NSBackingStoreBuffered
-                                                                defer:YES];
-        [tmp setPonyInstance:[[NBPonyInstance alloc] initWithPony:pony]];
-        [tmp makeKeyAndOrderFront:self];
-        [windows addObject:tmp];
-    }
+    manager = [[NBPonyManager alloc] initWithPonyCollection:ponyCollection];
+    for (NSString *name in testPonies)
+        [manager addPonyNamed:name];
 
     
     tickTimer = [NSTimer scheduledTimerWithTimeInterval:0.030
@@ -56,9 +42,7 @@
 
 - (void)doTick:(id)sender
 {
-    for (NBPonyWindow *w in windows) {
-        [w doTick];
-    }
+    [manager tickAll];
 }
 
 @end
