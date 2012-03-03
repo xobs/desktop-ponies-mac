@@ -10,10 +10,13 @@
 #import "NBPonyCollection.h"
 #import "NBPony.h"
 #import "NBPonyInstance.h"
+#import "NBPonyGLView.h"
 
 @interface NBPonyManager : NSObject {
-    NBPonyCollection *_collection;
-    NSMutableArray *_active;
+    NBPonyCollection    *_collection;
+    NSMutableArray      *_active;
+    NSWindow            *mainWindow;
+    NBPonyGLView        *mainView;
 }
 
 - (NBPonyManager *)initWithPonyCollection:(NBPonyCollection *)collection;

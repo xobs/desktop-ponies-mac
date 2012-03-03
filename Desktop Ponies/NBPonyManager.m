@@ -14,8 +14,23 @@
 {
     if (!(self = [super init]))
         return nil;
+    
+    NSRect screenSize = [[NSScreen mainScreen] visibleFrame];
+
     _active = [[NSMutableArray alloc] init];
     _collection = [collection retain];
+    
+    // Allocate main interface window
+    mainWindow = [[NSWindow alloc] initWithContentRect:screenSize styleMask:NSTitledWindowMask backing:NSBackingStoreBuffered defer:YES];
+    [mainWindow setOpaque:NO];
+    [mainWindow setBackgroundColor:[NSColor clearColor]];
+
+    // Allocate the OpenGL view
+    mainView = [[NBPonyGLView alloc] initWithFrame:[mainWindow contentRectForFrameRect:screenSize]];
+
+    [mainWindow setContentView:mainView];
+    [mainWindow makeKeyAndOrderFront:self];
+    [mainView startup];
     
     return self;
 }

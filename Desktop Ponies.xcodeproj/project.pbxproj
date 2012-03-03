@@ -27,6 +27,10 @@
 		9B7A419414F50EC000E321DB /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B7A419314F50EC000E321DB /* QTKit.framework */; };
 		9B7A419A14F51EA100E321DB /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B7A419914F51EA100E321DB /* WebKit.framework */; };
 		9B7A419D14F686CE00E321DB /* NBPonyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7A419C14F686CE00E321DB /* NBPonyManager.m */; };
+		9B7A419F1501108100E321DB /* libgif.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B7A419E1501108100E321DB /* libgif.a */; };
+		9B7A41A4150110D200E321DB /* NBGraphicsSequence.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7A41A3150110D200E321DB /* NBGraphicsSequence.m */; };
+		9B7A41B11501194000E321DB /* NBPonyGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7A41B01501193F00E321DB /* NBPonyGLView.m */; };
+		9B7A41B315011B7200E321DB /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B7A41B215011B7200E321DB /* OpenGL.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +81,13 @@
 		9B7A419914F51EA100E321DB /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = ../../../../System/Library/Frameworks/WebKit.framework; sourceTree = "<group>"; };
 		9B7A419B14F686CE00E321DB /* NBPonyManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBPonyManager.h; sourceTree = "<group>"; };
 		9B7A419C14F686CE00E321DB /* NBPonyManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBPonyManager.m; sourceTree = "<group>"; };
+		9B7A419E1501108100E321DB /* libgif.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgif.a; path = ../../../../../usr/local/Cellar/giflib/4.1.6/lib/libgif.a; sourceTree = "<group>"; };
+		9B7A41A01501109200E321DB /* gif_lib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gif_lib.h; path = ../../../../../usr/local/Cellar/giflib/4.1.6/include/gif_lib.h; sourceTree = "<group>"; };
+		9B7A41A2150110D200E321DB /* NBGraphicsSequence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBGraphicsSequence.h; sourceTree = "<group>"; };
+		9B7A41A3150110D200E321DB /* NBGraphicsSequence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBGraphicsSequence.m; sourceTree = "<group>"; };
+		9B7A41AF1501193E00E321DB /* NBPonyGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBPonyGLView.h; sourceTree = "<group>"; };
+		9B7A41B01501193F00E321DB /* NBPonyGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBPonyGLView.m; sourceTree = "<group>"; };
+		9B7A41B215011B7200E321DB /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = ../../../../System/Library/Frameworks/OpenGL.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +98,8 @@
 				9B7A414A14F4AC8F00E321DB /* Cocoa.framework in Frameworks */,
 				9B7A419414F50EC000E321DB /* QTKit.framework in Frameworks */,
 				9B7A419A14F51EA100E321DB /* WebKit.framework in Frameworks */,
+				9B7A419F1501108100E321DB /* libgif.a in Frameworks */,
+				9B7A41B315011B7200E321DB /* OpenGL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -124,6 +137,7 @@
 		9B7A414814F4AC8F00E321DB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9B7A41B215011B7200E321DB /* OpenGL.framework */,
 				9B7A414914F4AC8F00E321DB /* Cocoa.framework */,
 				9B7A416714F4AC8F00E321DB /* SenTestingKit.framework */,
 				9B7A414B14F4AC8F00E321DB /* Other Frameworks */,
@@ -150,6 +164,7 @@
 				9B7A415C14F4AC8F00E321DB /* NBAppDelegate.m */,
 				9B7A419B14F686CE00E321DB /* NBPonyManager.h */,
 				9B7A419C14F686CE00E321DB /* NBPonyManager.m */,
+				9B7A41A1150110A000E321DB /* Graphics */,
 				9B7A418C14F4EB2700E321DB /* Ini Parsing */,
 				9B7A419014F4F89B00E321DB /* NBPonyInstance.h */,
 				9B7A419114F4F89B00E321DB /* NBPonyInstance.m */,
@@ -164,6 +179,8 @@
 		9B7A415014F4AC8F00E321DB /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				9B7A41A01501109200E321DB /* gif_lib.h */,
+				9B7A419E1501108100E321DB /* libgif.a */,
 				9B7A415114F4AC8F00E321DB /* Desktop Ponies-Info.plist */,
 				9B7A415214F4AC8F00E321DB /* InfoPlist.strings */,
 				9B7A415514F4AC8F00E321DB /* main.m */,
@@ -207,6 +224,17 @@
 				9B7A418414F4C05B00E321DB /* NBPonyPhrase.m */,
 			);
 			name = "Ini Parsing";
+			sourceTree = "<group>";
+		};
+		9B7A41A1150110A000E321DB /* Graphics */ = {
+			isa = PBXGroup;
+			children = (
+				9B7A41A2150110D200E321DB /* NBGraphicsSequence.h */,
+				9B7A41A3150110D200E321DB /* NBGraphicsSequence.m */,
+				9B7A41AF1501193E00E321DB /* NBPonyGLView.h */,
+				9B7A41B01501193F00E321DB /* NBPonyGLView.m */,
+			);
+			name = Graphics;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -326,6 +354,8 @@
 				9B7A418F14F4EB5100E321DB /* NBPonyWindow.m in Sources */,
 				9B7A419214F4F89B00E321DB /* NBPonyInstance.m in Sources */,
 				9B7A419D14F686CE00E321DB /* NBPonyManager.m in Sources */,
+				9B7A41A4150110D200E321DB /* NBGraphicsSequence.m in Sources */,
+				9B7A41B11501194000E321DB /* NBPonyGLView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -434,6 +464,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Desktop Ponies/Desktop Ponies-Prefix.pch";
 				INFOPLIST_FILE = "Desktop Ponies/Desktop Ponies-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/Cellar/giflib/4.1.6/lib,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -445,6 +479,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Desktop Ponies/Desktop Ponies-Prefix.pch";
 				INFOPLIST_FILE = "Desktop Ponies/Desktop Ponies-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/Cellar/giflib/4.1.6/lib,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

@@ -63,7 +63,7 @@
     }
     
     _behavior = newBehavior;
-    NSLog(@"Starting behavior %@", [_behavior name]);
+//    NSLog(@"Starting behavior %@", [_behavior name]);
     [self didChangeBehavior];    
     return _behavior;
 }
