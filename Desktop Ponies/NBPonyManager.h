@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "NBPonyCollection.h"
+#import "NBGraphicsSequence.h"
 #import "NBPony.h"
 #import "NBPonyInstance.h"
 #import "NBPonyGLView.h"
@@ -25,7 +26,7 @@
 - (BOOL)removePony:(NBPony *)pony;
 - (BOOL)removePonyNamed:(NSString *)name;
 
-- (int)tickAll;
+- (int)tickAll:(long long)elapsed;
 
 
 @end

@@ -22,7 +22,6 @@
 		9B7A418514F4C05B00E321DB /* NBPonyPhrase.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7A418414F4C05B00E321DB /* NBPonyPhrase.m */; };
 		9B7A418814F4C3F900E321DB /* NBPonyEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7A418714F4C3F900E321DB /* NBPonyEffect.m */; };
 		9B7A418B14F4C55500E321DB /* NBPonyBehavior.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7A418A14F4C55400E321DB /* NBPonyBehavior.m */; };
-		9B7A418F14F4EB5100E321DB /* NBPonyWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7A418E14F4EB5100E321DB /* NBPonyWindow.m */; };
 		9B7A419214F4F89B00E321DB /* NBPonyInstance.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7A419114F4F89B00E321DB /* NBPonyInstance.m */; };
 		9B7A419414F50EC000E321DB /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B7A419314F50EC000E321DB /* QTKit.framework */; };
 		9B7A419A14F51EA100E321DB /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B7A419914F51EA100E321DB /* WebKit.framework */; };
@@ -73,8 +72,6 @@
 		9B7A418714F4C3F900E321DB /* NBPonyEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBPonyEffect.m; sourceTree = "<group>"; };
 		9B7A418914F4C55400E321DB /* NBPonyBehavior.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBPonyBehavior.h; sourceTree = "<group>"; };
 		9B7A418A14F4C55400E321DB /* NBPonyBehavior.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBPonyBehavior.m; sourceTree = "<group>"; };
-		9B7A418D14F4EB5100E321DB /* NBPonyWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBPonyWindow.h; sourceTree = "<group>"; };
-		9B7A418E14F4EB5100E321DB /* NBPonyWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBPonyWindow.m; sourceTree = "<group>"; };
 		9B7A419014F4F89B00E321DB /* NBPonyInstance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBPonyInstance.h; sourceTree = "<group>"; };
 		9B7A419114F4F89B00E321DB /* NBPonyInstance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBPonyInstance.m; sourceTree = "<group>"; };
 		9B7A419314F50EC000E321DB /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = ../../../../System/Library/Frameworks/QTKit.framework; sourceTree = "<group>"; };
@@ -168,8 +165,6 @@
 				9B7A418C14F4EB2700E321DB /* Ini Parsing */,
 				9B7A419014F4F89B00E321DB /* NBPonyInstance.h */,
 				9B7A419114F4F89B00E321DB /* NBPonyInstance.m */,
-				9B7A418D14F4EB5100E321DB /* NBPonyWindow.h */,
-				9B7A418E14F4EB5100E321DB /* NBPonyWindow.m */,
 				9B7A415E14F4AC8F00E321DB /* MainMenu.xib */,
 				9B7A415014F4AC8F00E321DB /* Supporting Files */,
 			);
@@ -351,7 +346,6 @@
 				9B7A418514F4C05B00E321DB /* NBPonyPhrase.m in Sources */,
 				9B7A418814F4C3F900E321DB /* NBPonyEffect.m in Sources */,
 				9B7A418B14F4C55500E321DB /* NBPonyBehavior.m in Sources */,
-				9B7A418F14F4EB5100E321DB /* NBPonyWindow.m in Sources */,
 				9B7A419214F4F89B00E321DB /* NBPonyInstance.m in Sources */,
 				9B7A419D14F686CE00E321DB /* NBPonyManager.m in Sources */,
 				9B7A41A4150110D200E321DB /* NBGraphicsSequence.m in Sources */,
@@ -535,6 +529,7 @@
 				9B7A417914F4AC8F00E321DB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9B7A417A14F4AC8F00E321DB /* Build configuration list for PBXNativeTarget "Desktop PoniesTests" */ = {
 			isa = XCConfigurationList;
@@ -543,6 +538,7 @@
 				9B7A417C14F4AC8F00E321DB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -17,19 +17,9 @@
         return nil;
     _pony = [pony retain];
     srandomdev();
+    origin = NSMakePoint(400, 300);
     
-    _window = [[NBPonyWindow alloc] initWithContentRect:NSMakeRect(100, 500, 50, 50)
-                                                        styleMask:NSBorderlessWindowMask
-                                                          backing:NSBackingStoreBuffered
-                                                            defer:YES];
-    [_window setPonyInstance:self];
-        
     return self;
-}
-
-- (void)showWindow
-{
-    [_window makeKeyAndOrderFront:self];
 }
 
 - (NBPonyBehavior *)startRandomBehavior {
@@ -51,7 +41,7 @@
         }
         
         behavior = [behaviors objectAtIndex:i];
-        if (![_window behaviorIsAppropriate:behavior forInstance:self])
+        if (![_delegate behaviorIsAppropriate:behavior forInstance:self])
             continue;
         
         newBehavior = [behaviors objectAtIndex:i];
@@ -63,6 +53,7 @@
     }
     
     _behavior = newBehavior;
+    currentFrame = 0;
 //    NSLog(@"Starting behavior %@", [_behavior name]);
     [self didChangeBehavior];    
     return _behavior;
@@ -126,8 +117,6 @@
     }
     speed = speed * speed;
     
-    [_window invalidateGraphicsForInstance:self];
-    
     // Add a timer to move to a new behavior after this one ends.
     NSTimeInterval timeTillNewBehavior = [_behavior randomTimeout];
     if (_newBehaviorTimeout)
@@ -142,19 +131,24 @@
 
 - (void)behaviorExpired:(id)sender
 {
-    [_window behaviorTimeoutExpiredForInstance:self];
+    [_delegate behaviorTimeoutExpiredForInstance:self];
 }
 
 #pragma mark -
 #pragma mark Tick
 
-- (void)tick
+- (int)currentFrame
+{
+    return currentFrame;
+}
+
+- (void)tick:(long long)elapsed
 {
     if (horiz || vert) {
         NSSize movement = NSMakeSize(sqrt(speed*2)*horiz*cos(angle), sqrt(speed*2)*vert*sin(angle));
     
-        if ([_window shouldBounce:movement forInstance:self]) {
-            NSSize newMovement = [_window makeBestBounce:movement forInstance:self];
+        if ([_delegate shouldBounce:movement forInstance:self]) {
+            NSSize newMovement = [_delegate makeBestBounce:movement forInstance:self];
         
             if (newMovement.width != movement.width)
                 horiz *= -1;
@@ -163,10 +157,25 @@
         
             movement = NSMakeSize(sqrt(speed*2)*horiz*cos(angle), sqrt(speed*2)*vert*sin(angle));
 
-            [_window invalidateGraphicsForInstance:self];
             //NSLog(@"Now pointing %s and %s, angle %lf", vert==up?"up":(vert==down?"down":"none"), horiz==left?"left":(horiz==right?"right":"none"), angle);
         }
-        [_window performMovement:movement forInstance:self];
+        origin.x += movement.width;
+        origin.y += movement.height;
+    }
+    
+    
+    while (elapsed > 0 && [[self image] delayForFrame:currentFrame]) {
+        if (elapsed > millisLeft) {
+            elapsed -= millisLeft;
+            currentFrame++;
+            if (currentFrame >= [[self image] totalFrames])
+                currentFrame = 0;
+            millisLeft = [[self image] delayForFrame:currentFrame];
+        }
+        else {
+            millisLeft -= elapsed;
+            elapsed = 0;
+        }
     }
 }
 
@@ -190,8 +199,7 @@
     }
     [_newBehaviorTimeout invalidate];
     _newBehaviorTimeout = nil;
-    [_window invalidateGraphicsForInstance:self];
-    [_window moveToPoint:point forInstance:self];
+    origin = point;
 }
 
 - (void)endDragAtPoint:(NSPoint)point
@@ -202,7 +210,7 @@
 
 - (void)dragToPoint:(NSPoint)point
 {
-    [_window moveToPoint:point forInstance:self];    
+    return;
 }
 
 - (void)mouseEntered:(NSEvent *)anEvent
@@ -223,7 +231,6 @@
     }
     [_newBehaviorTimeout invalidate];
     _newBehaviorTimeout = nil;
-    [_window invalidateGraphicsForInstance:self];
 }
 
 - (void)mouseExited:(NSEvent *)anEvent
@@ -239,7 +246,7 @@
 
 - (void)setDelegate:(id)delegate
 {
-    _window = delegate;
+    _delegate = delegate;
 }
 
 - (NBPonyBehavior *)behavior
@@ -254,18 +261,11 @@
     return [_behavior rightImagePath];
 }
 
-- (NSImage *)image
+- (NBGraphicsSequence *)image
 {
     if (horiz == left)
         return [_behavior leftImage];
     return [_behavior rightImage];
-}
-
-- (NSData *)imageData
-{
-    if (horiz == left)
-        return [_behavior leftImageData];
-    return [_behavior rightImageData];
 }
 
 - (NSPoint)imageCenter
@@ -283,6 +283,15 @@
 - (int)facing
 {
     return horiz;
+}
+
+- (NSPoint)origin
+{
+    return origin;
+}
+
+- (void)setOrigin:(NSPoint)pt {
+    origin = pt;
 }
 
 @end

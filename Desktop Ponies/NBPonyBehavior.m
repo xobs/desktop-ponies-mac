@@ -156,28 +156,19 @@ enum field_names {
         _rightImageCenter = NSMakePoint(-1, -1);
     
     
-    if ([array count] > left_image_path) {
+    if ([array count] > left_image_path)
         _leftImagePath = [[path stringByAppendingPathComponent:[array objectAtIndex:left_image_path]] retain];
-        _leftImage = [[NSImage alloc] initWithContentsOfFile:_leftImagePath];
-        _leftImageData = [[NSData alloc] initWithContentsOfFile:_leftImagePath];
-    }
-    else {
-        _leftImage = nil;
+    else
         _leftImagePath = nil;
-        _leftImageData = nil;
-    }
+    _leftImage = nil;
 
     
-    if ([array count] > right_image_path) {
+    if ([array count] > right_image_path)
         _rightImagePath = [[path stringByAppendingPathComponent:[array objectAtIndex:right_image_path]] retain];
-        _rightImage = [[NSImage alloc] initWithContentsOfFile:_rightImagePath];
-        _rightImageData = [[NSData alloc] initWithContentsOfFile:_rightImagePath];
-    }
-    else {
-        _rightImage = nil;
+    else
         _rightImagePath = nil;
-        _rightImageData = nil;
-    }
+    _rightImage = nil;
+
     
     if ([array count] > max_duration)
         _maxDuration = [[array objectAtIndex:max_duration] doubleValue];
@@ -226,24 +217,18 @@ enum field_names {
     return _rightImagePath;
 }
 
-- (NSImage *)leftImage
+- (NBGraphicsSequence *)leftImage
 {
+    if (!_leftImage)
+        _leftImage = [[NBGraphicsSequence alloc] initWithPath:_leftImagePath];
     return _leftImage;
 }
 
-- (NSImage *)rightImage
+- (NBGraphicsSequence *)rightImage
 {
+    if (!_rightImage)
+        _rightImage = [[NBGraphicsSequence alloc] initWithPath:_rightImagePath];
     return _rightImage;
-}
-
-- (NSData *)leftImageData
-{
-    return _leftImageData;
-}
-
-- (NSData *)rightImageData
-{
-    return _rightImageData;
 }
 
 - (NSPoint)leftImageCenter

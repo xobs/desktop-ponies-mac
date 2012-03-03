@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "NBGraphicsSequence.h"
 
 #define MOVEMENT_NONE 0
 #define MOVEMENT_HORIZ 1
@@ -38,8 +39,7 @@
     NSPoint _rightImageCenter, _leftImageCenter;
     
     NSString *_leftImagePath, *_rightImagePath;
-    NSImage *_leftImage, *_rightImage;
-    NSData *_leftImageData, *_rightImageData;
+    NBGraphicsSequence *_leftImage, *_rightImage;
 }
 
 + (NBPonyBehavior *)arrayToPonyBehavior:(NSArray *)array path:(NSString *)path;
@@ -48,10 +48,8 @@
 - (NSString *)name;
 - (NSString *)leftImagePath;
 - (NSString *)rightImagePath;
-- (NSImage *)leftImage;
-- (NSImage *)rightImage;
-- (NSData *)leftImageData;
-- (NSData *)rightImageData;
+- (NBGraphicsSequence *)leftImage;
+- (NBGraphicsSequence *)rightImage;
 - (NSPoint)leftImageCenter;
 - (NSPoint)rightImageCenter;
 

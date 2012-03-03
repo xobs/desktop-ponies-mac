@@ -10,27 +10,23 @@
 
 struct image;
 @interface NBGraphicsSequence : NSObject {
-    unsigned int    currentFrame;
     unsigned int    totalFrames;
-    unsigned int    millisLeft;
     NSSize          size;
     struct image   *data;
 }
 
 - (id)initWithPath:(NSString *)path;
 
-/* Call this once every 10ms */
-- (BOOL)tick:(long long)elapsed;
-
-/* Resets back to frame #0 */
-- (void)reset;
-
-/* Get the current frame's image data (as 32-bit RGBA) */
-- (void *)data;
-
 - (int)width;
 - (int)height;
+- (NSSize)size;
 
-- (unsigned int)textureId;
-- (void)setTextureId:(unsigned int)tex;
+- (int)totalFrames;
+
+/* Get the current frame's image data (as 32-bit RGBA) */
+- (void *)dataForFrame:(int)frame;
+- (int)delayForFrame:(int)frame;
+- (unsigned int)textureIdForFrame:(int)frame;
+- (void)setTextureId:(unsigned int)tex forFrame:(int)frame;
+
 @end

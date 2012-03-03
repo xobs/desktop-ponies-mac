@@ -7,21 +7,26 @@
 //
 
 #import <OpenGL/glu.h>
-#include <sys/time.h>
 #import "NBPonyGLView.h"
+#import "NBGraphicsSequence.h"
+
+@implementation NBPonyGLView
 
 
-static long long getTimeMillis(void) {
-    struct timeval time;
-    gettimeofday(&time, NULL);
-    return (time.tv_sec * 1000) + (time.tv_usec / 1000);
+#pragma mark -
+#pragma mark Pony utils
+
+- (void)addPonyInstance:(NBPonyInstance *)instance {
+    [instances addObject:instance];
 }
 
+- (void)removePonyInstance:(NBPonyInstance *)instance {
+    [instances removeObject:instance];
+}
 
 #pragma mark ---- OpenGL Utils ----
 // ---------------------------------
 
-@implementation NBPonyGLView
 
 // pixel format definition
 + (NSOpenGLPixelFormat*) basicPixelFormat
@@ -36,15 +41,20 @@ static long long getTimeMillis(void) {
 }
 
 
-- (void)drawFluttershy {
+- (void)drawInstance:(NBPonyInstance *)instance {
+    NSPoint origin = [instance origin];
+    NBGraphicsSequence *sequence = [instance image];
+    int frame = [instance currentFrame];
     GLuint textureID;
     float scaleX = 1.0;
     float scaleY = 1.0;
+    float x = origin.x;
+    float y = origin.y;
     
     // Disable lighting
 	//glDisable( GL_LIGHTING );
     
-    textureID = [fluttershy textureId];
+    textureID = [sequence textureIdForFrame:frame];
     if (!textureID) {
         // Disable dithering
         glDisable( GL_DITHER );
@@ -74,21 +84,17 @@ static long long getTimeMillis(void) {
     
         // Write the 32-bit RGBA texture buffer to video memory
         glTexImage2D( GL_TEXTURE_RECTANGLE_ARB, 0, GL_RGBA,
-                 [fluttershy width], [fluttershy height],
-                 0, GL_RGBA, GL_UNSIGNED_BYTE, [fluttershy data]);
+                 [sequence width], [sequence height],
+                     0, GL_RGBA, GL_UNSIGNED_BYTE, [sequence dataForFrame:frame]);
         
-        [fluttershy setTextureId:textureID];
+        [sequence setTextureId:textureID forFrame:frame];
     }
-    
     
     
     glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_TEXTURE_2D);
     
-    
-    int x = 400;
-    int y = 500;
     
 	// Bind the texture to the polygons
 	glBindTexture(GL_TEXTURE_RECTANGLE_ARB, textureID);
@@ -117,35 +123,31 @@ static long long getTimeMillis(void) {
     glTexCoord2i(0, 0);
     glVertex2i(0, 0);
     
-    glTexCoord2i(0, [fluttershy height]);
-    glVertex2i(0, [fluttershy height]);
+    glTexCoord2i(0, [sequence height]);
+    glVertex2i(0, [sequence height]);
     
-    glTexCoord2i([fluttershy width], [fluttershy height]);
-    glVertex2i([fluttershy width], [fluttershy height]);
+    glTexCoord2i([sequence width], [sequence height]);
+    glVertex2i([sequence width], [sequence height]);
     
-    glTexCoord2i([fluttershy width], 0);
-    glVertex2i([fluttershy width], 0);
+    glTexCoord2i([sequence width], 0);
+    glVertex2i([sequence width], 0);
 	glEnd();
     
 	glPopMatrix();
 }
 
-
-
 // per-window timer function, basic time based animation preformed here
-- (void)animationTimer:(NSTimer *)timer
+- (void)redraw
 {
-    long long this = getTimeMillis();
-    
 	// clear our drawable
 	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
-    [fluttershy tick:(this-last)];
-    [self drawFluttershy];
-    [[self openGLContext] flushBuffer];
+    for (NBPonyInstance *instance in instances)
+        [self drawInstance:instance];
     
-    last = this;
+    [[self openGLContext] flushBuffer];
 }
+
 
 
 - (void)set2DMode:(NSSize)size
@@ -204,23 +206,10 @@ static long long getTimeMillis(void) {
 
 - (void)startup
 {
-    /*
-    // set start values...
-	rVel[0] = 0.3; rVel[1] = 0.1; rVel[2] = 0.2; 
-	rAccel[0] = 0.003; rAccel[1] = -0.005; rAccel[2] = 0.004;
-     */
-	time = CFAbsoluteTimeGetCurrent ();  // set animation time start time
+    instances = [[NSMutableArray alloc] init];
+        
 
-    
-    fluttershy = [[NBGraphicsSequence alloc] initWithPath:@"/Users/smc/Downloads/Desktop Ponies V1.39/Rarity/rarity-dramacouch-left1.gif"];
-    
     glClearColor(0.0, 0.0, 0.0, 0.0);
-    last = getTimeMillis();
-
-	// start animation timer
-	timer = [NSTimer timerWithTimeInterval:(1.0f/60.0f) target:self selector:@selector(animationTimer:) userInfo:nil repeats:YES];
-	[[NSRunLoop currentRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
-	[[NSRunLoop currentRunLoop] addTimer:timer forMode:NSEventTrackingRunLoopMode]; // ensure timer fires during resize
 }
 
 @end

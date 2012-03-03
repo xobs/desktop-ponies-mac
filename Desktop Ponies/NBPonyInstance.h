@@ -10,7 +10,7 @@
 
 
 #import "NBPony.h"
-#import "NBPonyWindow.h"
+#import "NBGraphicsSequence.h"
 
 @class NBPonyInstance;
 @class NBPonyWindow;
@@ -36,8 +36,15 @@
     double angle, realAngle;
     double speed;
     
-    NBPonyWindow *_window;
+    id _delegate;
     BOOL dragging;
+    
+    NSPoint origin;
+    
+    NBGraphicsSequence *graphic;
+    
+    int millisLeft;
+    int currentFrame;
 }
 
 - (NBPonyInstance *)initWithPony:(NBPony *)pony;
@@ -45,8 +52,7 @@
 - (NBPonyBehavior *)startBehavior:(NBPonyBehavior *)behavior;
 - (NBPonyBehavior *)behavior;
 - (NSString *)imagePath;
-- (NSImage *)image;
-- (NSData *)imageData;
+- (NBGraphicsSequence *)image;
 - (NSPoint)imageCenter;
 - (int)facing;
 
@@ -55,7 +61,8 @@
 
 - (void)didChangeBehavior;
 
-- (void)tick;
+- (void)tick:(long long)elapsed;
+- (int)currentFrame;
 
 - (void)beginDragAtPoint:(NSPoint)point;
 - (void)endDragAtPoint:(NSPoint)point;
@@ -63,7 +70,8 @@
 - (void)mouseEntered:(NSEvent *)event;
 - (void)mouseExited:(NSEvent *)anEvent;
 
-- (void)showWindow;
+- (NSPoint)origin;
+- (void)setOrigin:(NSPoint)pt;
 
 @end
 
@@ -71,12 +79,9 @@
 @interface NSObject (NBPonyInstanceDelegate)
 
 - (void)behaviorTimeoutExpiredForInstance:(NBPonyInstance *)instance;
-- (void)performMovement:(NSSize)delta forInstance:(NBPonyInstance *)instance;
 - (BOOL)shouldBounce:(NSSize)delta forInstance:(NBPonyInstance *)instance;
 - (NSSize)makeBestBounce:(NSSize)delta forInstance:(NBPonyInstance *)instance;
-- (void)invalidateGraphicsForInstance:(NBPonyInstance *)instance;
 - (BOOL)wouldFitOnScreen:(NSSize)newSize forInstance:(NBPonyInstance *)instance;
-- (void)moveToPoint:(NSPoint)point forInstance:(NBPonyInstance *)instance;
 
 - (BOOL)behaviorIsAppropriate:(NBPonyBehavior *)behavior forInstance:(NBPonyInstance *)instance;
 

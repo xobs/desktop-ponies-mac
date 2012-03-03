@@ -14,7 +14,7 @@ struct pixel {
 } __attribute__ ((__packed__));
 
 struct image {
-    void *pixels;
+    struct pixel *pixels;
     unsigned int delay;
     unsigned int texId;
 };
@@ -25,6 +25,7 @@ struct image {
 - (id)initWithPath:(NSString *)path {
     GifFileType *gif;
     int currentImage;
+    int previous_dispose = 0;
     
     if (!(self = [super init]))
         return nil;
@@ -44,18 +45,15 @@ struct image {
     }
     
     totalFrames = gif->ImageCount;
-    currentFrame = 0;
     
     data = NSZoneMalloc(NULL, totalFrames * sizeof(struct image));
     
     for (currentImage = 0; currentImage < totalFrames; currentImage++) {
         ColorMapObject *colorMap;
         SavedImage     *image;
-        void           *pixels;
+        struct pixel   *pixels;
         size_t          width;
         size_t          height;
-        size_t          bytesPerRow;
-        size_t          bitsPerPixel;
         unsigned int    x, y;
         int             bgColorIndex;
         int             colorCount;
@@ -66,22 +64,37 @@ struct image {
         int             interlacePass;
         int             interlaceDelta;
         int             block;
+        int             left, top;
+        int             dispose;
         
         colorMap        = gif->SColorMap;
-        lut             = colorMap->Colors;
         image           = gif->SavedImages + currentImage;
         width           = image->ImageDesc.Width;
         height          = image->ImageDesc.Height;
-        bytesPerRow     = width*sizeof(struct pixel);
-        bitsPerPixel    = 32;
-        pixels          = NSZoneMalloc(NULL, bytesPerRow * height);
+        left            = image->ImageDesc.Left;
+        top             = image->ImageDesc.Top;
+        dispose         = 0;
+        pixels          = NSZoneMalloc(NULL, gif->SWidth * gif->SHeight * sizeof(pixel));
         pixel           = pixels;
         bgColorIndex    = (gif->SColorMap==NULL) ? -1 : gif->SBackGroundColor;
         raster          = image->RasterBits;
-        colorCount      = colorMap->ColorCount;
         interlace       = image->ImageDesc.Interlace;
         interlacePass   = 1;
         interlaceDelta  = 8;
+        
+        if (colorMap) {
+            lut         = colorMap->Colors;
+            colorCount  = colorMap->ColorCount;
+        }
+        else {
+            lut = NULL;
+            colorCount = 0;
+        }
+        
+        if (image->ImageDesc.ColorMap) {
+            lut = image->ImageDesc.ColorMap->Colors;
+            colorCount = image->ImageDesc.ColorMap->ColorCount;
+        }
 
         size.width = width;
         size.height = height;
@@ -93,16 +106,23 @@ struct image {
         for (block = 0; block < image->ExtensionBlockCount; block++) {
             ExtensionBlock *theBlock = image->ExtensionBlocks+block;
             int delay;
-            
+#warning Get disposal / origin working!
             if (theBlock->ByteCount == 4 && theBlock->Function == 0xF9) {
                 delay = theBlock->Bytes[2]<<8 | theBlock->Bytes[1];
                 
+                if (delay > 1000 || delay < 0) {
+                    NSLog(@"Uh, what a strange delay. %d\n", delay);
+                    delay = 0;
+                }
                 // Convert GIF's centiseconds into milliseconds
                 data[currentImage].delay = delay*10;
                 
                 // See if the transparency is different for this frame
                 if (theBlock->Bytes[0] & 1)
                     bgColorIndex = 0xff & theBlock->Bytes[3];
+                
+                // Determine the disposal (inter-frame fade) method
+                dispose = (theBlock->Bytes[0] >> 2) & 0x7;
             }
             /*
              else if (theBlock->Function == 0xFE) {
@@ -129,8 +149,20 @@ struct image {
              */
         }
 
-        for (y=0; y<height; y++) {
-            for (x=0; x<width; x++) {
+        /* Handle disposal method */
+        if (previous_dispose == 1) {
+            memcpy(pixels, data[currentImage-1].pixels, gif->SWidth * gif->SHeight * sizeof(struct pixel));
+        }
+        else if (dispose == 2) {
+            memset(pixels, 0, gif->SWidth*gif->SHeight*sizeof(struct pixel));
+        }
+        else if (dispose == 3 && currentImage > 1) {
+            memcpy(pixels, data[currentImage-2].pixels, gif->SWidth * gif->SHeight * sizeof(struct pixel));
+        }
+        
+        for (y=top; y<height; y++) {
+            pixel = pixels + (y*gif->SWidth)+left;
+            for (x=left; x<width; x++) {
                 unsigned char colorIndex = *raster;
                 
                 if(colorIndex == bgColorIndex) {
@@ -159,7 +191,7 @@ struct image {
             
             if(interlace) {
                 pixel += (interlaceDelta-1)*width;
-                if((void *)pixel >= pixels+width*height){
+                if(pixel >= pixels+width*height){
                     interlacePass++;
                     
                     switch(interlacePass){
@@ -182,38 +214,21 @@ struct image {
         }
         
         /* Now an RGBA image is stored in *pixels */
-        data[currentImage].pixels = pixels;        
+        data[currentImage].pixels = pixels;
+        previous_dispose = dispose;
     }
     
     DGifCloseFile(gif);
     
-    millisLeft = data[0].delay;
-    
     return self;
 }
 
-/* Call this once every 10ms or so */
-- (BOOL)tick:(long long)elapsed {
-    BOOL changed = NO;
-    while (elapsed > 0 && data[currentFrame].delay) {
-        if (elapsed > millisLeft) {
-            elapsed -= millisLeft;
-            currentFrame++;
-            if (currentFrame >= totalFrames)
-                currentFrame = 0;
-            millisLeft = data[currentFrame].delay;
-            changed = YES;
-        }
-        else {
-            millisLeft -= elapsed;
-            elapsed = 0;
-        }
-    }
-    return changed;
+- (int)totalFrames {
+    return totalFrames;
 }
 
-- (void *)data {
-    return data[currentFrame].pixels;
+- (void *)dataForFrame:(int)frame {
+    return data[frame].pixels;
 }
 
 - (int)width {
@@ -224,21 +239,21 @@ struct image {
     return size.height;
 }
 
-
-/* Resets back to frame #0 */
-- (void)reset {
-    currentFrame = 0;
+- (NSSize)size {
+    return size;
 }
 
-
-- (unsigned int)textureId {
-    return data[currentFrame].texId;
+- (unsigned int)textureIdForFrame:(int)frame {
+    return data[frame].texId;
 }
 
-- (void)setTextureId:(unsigned int)tex
+- (void)setTextureId:(unsigned int)tex forFrame:(int)frame
 {
-    data[currentFrame].texId = tex;
+    data[frame].texId = tex;
 }
 
+- (int)delayForFrame:(int)frame {
+    return data[frame].delay;
+}
 
 @end

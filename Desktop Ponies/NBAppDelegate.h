@@ -8,16 +8,15 @@
 
 #import <Cocoa/Cocoa.h>
 #import "NBPonyCollection.h"
-#import "NBPonyWindow.h"
 #import "NBPonyManager.h"
 
 @interface NBAppDelegate : NSObject <NSApplicationDelegate> {
     NBPonyCollection *ponyCollection;
     NBPonyManager *manager;
     NSTimer *tickTimer;
+    long long last;
 }
 
-@property (assign) IBOutlet NSWindow *window;
 - (void)doTick:(id)sender;
 
 @end
