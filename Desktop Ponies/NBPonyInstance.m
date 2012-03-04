@@ -23,38 +23,37 @@
 }
 
 - (NBPonyBehavior *)startRandomBehavior {
-    int tries;
     NSArray *behaviors = [_pony behaviorsAsArray];
     NSUInteger totalBehaviors = [behaviors count];
-    NBPonyBehavior *newBehavior = nil;
+    NSMutableArray *array = [NSMutableArray array];
     
-    for (tries=0; tries<MAX_TRIES && newBehavior == nil; tries++) {
-        double value = random()/(double)RAND_MAX*[_pony behaviorProbabilityTotal];
-        double count;
-        unsigned int i;
-        NBPonyBehavior *behavior;
-        for (i=0, count=0; i<totalBehaviors && count<value; i++)
-            count += [[behaviors objectAtIndex:i] probability];
-        if (i>=totalBehaviors) {
-            NSLog(@"Warning: Exceeded total behaviors");
-            i=0;
+    /* First, figure out the total probability of behaviors that are appropriate */
+    double probability = 0;
+    for (NBPonyBehavior *b in behaviors) {
+        if ([_delegate behaviorIsAppropriate:b forInstance:self]) {
+            [array addObject:b];
+            probability += [b probability];
         }
-        
-        behavior = [behaviors objectAtIndex:i];
-        if (![_delegate behaviorIsAppropriate:behavior forInstance:self])
-            continue;
-        
-        newBehavior = [behaviors objectAtIndex:i];
     }
-
-    if (!newBehavior) {
-        NSLog(@"Warning: Couldn't decide on a behavior, so picking behavior 0");
-        newBehavior = [behaviors objectAtIndex:0];
+    
+    /* There are no appropriate behaviors, so place the instance
+     * at the center and try again
+     */
+    if (![array count]) {
+        origin = NSMakePoint(200, 200);
+        return [self startRandomBehavior];
     }
+    /* Next, pick a random number between 0 and the total */
+    double value = random()/(double)RAND_MAX*probability;
 
-    _behavior = newBehavior;
+    int i;
+    totalBehaviors = [array count]-1;
+    for (i=0; i<totalBehaviors && value > 0; i++)
+        value -= [[array objectAtIndex:i] probability];
+    
+    _behavior = [array objectAtIndex:i];    
     currentFrame = 0;
-//    NSLog(@"Starting behavior %@", [_behavior name]);
+
     [self didChangeBehavior];    
     return _behavior;
 }
