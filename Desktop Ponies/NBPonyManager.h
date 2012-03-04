@@ -27,6 +27,6 @@
 - (BOOL)removePonyNamed:(NSString *)name;
 
 - (int)tickAll:(long long)elapsed;
-
+- (void)redraw;
 
 @end

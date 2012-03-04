@@ -20,9 +20,8 @@
     _active = [[NSMutableArray alloc] init];
     _collection = [collection retain];
     
-    
     // Allocate main interface window
-    mainWindow = [[NSWindow alloc] initWithContentRect:screenSize styleMask:NSTitledWindowMask backing:NSBackingStoreBuffered defer:YES];
+    mainWindow = [[NSWindow alloc] initWithContentRect:screenSize styleMask:NSTitledWindowMask|NSResizableWindowMask backing:NSBackingStoreBuffered defer:YES];
     [mainWindow setOpaque:NO];
     [mainWindow setBackgroundColor:[NSColor clearColor]];
 
@@ -32,7 +31,7 @@
     [mainWindow setContentView:mainView];
     [mainWindow makeKeyAndOrderFront:self];
     [mainView startup];
-
+    
     return self;
 }
 
@@ -53,6 +52,10 @@
 
     [_active addObject:i];
     return YES;
+}
+
+- (void)redraw {
+    [mainView redraw];
 }
 
 - (NBPonyInstance *)ponyNamed:(NSString *)name
@@ -110,30 +113,17 @@
     [instance startRandomBehavior];
 }
          
-- (BOOL)wouldFitOnScreen:(NSSize)newSize forInstance:(NBPonyInstance *)instance
+
+- (BOOL)wouldFitOnScreen:(NSSize)delta forInstance:(NBPonyInstance *)instance
 {
-    NSRect screenSize = [[NSScreen mainScreen] visibleFrame];
-    NSRect f = NSMakeRect([instance origin].x, [instance origin].y, newSize.width, newSize.height);
-    if (f.origin.x < screenSize.origin.x
-     || f.origin.y < screenSize.origin.y
-     || f.origin.x + f.size.width > screenSize.size.width + screenSize.origin.x
-     || f.origin.y + f.size.height > screenSize.size.height + screenSize.origin.y)
+    NSRect screenSize = [mainView frame];
+    NSRect f = NSMakeRect([instance origin].x, [instance origin].y, [[instance image] width], [[instance image] height]);
+    if (f.origin.x < 0
+        || f.origin.y < 0
+        || f.origin.x + f.size.width > screenSize.size.width + screenSize.origin.x
+        || f.origin.y + f.size.height > screenSize.size.height + screenSize.origin.y)
         return NO;
     return YES;
-}
-         
-- (BOOL)shouldBounce:(NSSize)delta forInstance:(NBPonyInstance *)instance
-{
-    NSRect screenSize = [[NSScreen mainScreen] visibleFrame];
-    NSRect f = NSMakeRect([instance origin].x, [instance origin].y, delta.width, delta.height);
-    f.origin.x += delta.width;
-    f.origin.y += delta.height;
-    if (f.origin.x < screenSize.origin.x
-     || f.origin.y < screenSize.origin.y
-     || f.origin.x + f.size.width > screenSize.size.width + screenSize.origin.x
-     || f.origin.y + f.size.height > screenSize.size.height + screenSize.origin.y)
-        return YES;
-    return NO;
 }
          
 - (NSSize)makeBestBounce:(NSSize)delta forInstance:(NBPonyInstance *)instance

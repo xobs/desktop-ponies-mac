@@ -207,8 +207,6 @@
 - (void)startup
 {
     instances = [[NSMutableArray alloc] init];
-        
-
     glClearColor(0.0, 0.0, 0.0, 0.0);
 }
 

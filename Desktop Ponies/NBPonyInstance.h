@@ -45,6 +45,7 @@
     
     int millisLeft;
     int currentFrame;
+    int timeTillNewBehavior;
 }
 
 - (NBPonyInstance *)initWithPony:(NBPony *)pony;

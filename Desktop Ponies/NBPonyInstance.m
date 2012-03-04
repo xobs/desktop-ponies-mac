@@ -17,7 +17,7 @@
         return nil;
     _pony = [pony retain];
     srandomdev();
-    origin = NSMakePoint(400, 300);
+    origin = NSMakePoint(200, 200);
     
     return self;
 }
@@ -51,7 +51,7 @@
         NSLog(@"Warning: Couldn't decide on a behavior, so picking behavior 0");
         newBehavior = [behaviors objectAtIndex:0];
     }
-    
+
     _behavior = newBehavior;
     currentFrame = 0;
 //    NSLog(@"Starting behavior %@", [_behavior name]);
@@ -72,6 +72,7 @@
 {
     // Recalculate movement data.
     int flags = [_behavior movementFlags];
+    
     // Flags indicate it's either "no movement" or "sleeping/mouseover/dragged"
     if (!(flags&MOVEMENT_ALL)) {
         vert = none;
@@ -118,20 +119,7 @@
     speed = speed * speed;
     
     // Add a timer to move to a new behavior after this one ends.
-    NSTimeInterval timeTillNewBehavior = [_behavior randomTimeout];
-    if (_newBehaviorTimeout)
-        [_newBehaviorTimeout invalidate];
-    
-    _newBehaviorTimeout = [NSTimer scheduledTimerWithTimeInterval:timeTillNewBehavior
-                                                           target:self
-                                                         selector:@selector(behaviorExpired:)
-                                                         userInfo:nil
-                                                          repeats:NO];
-}
-
-- (void)behaviorExpired:(id)sender
-{
-    [_delegate behaviorTimeoutExpiredForInstance:self];
+    timeTillNewBehavior = [_behavior randomTimeout]*1000;
 }
 
 #pragma mark -
@@ -144,10 +132,16 @@
 
 - (void)tick:(long long)elapsed
 {
-    if (horiz || vert) {
-        NSSize movement = NSMakeSize(sqrt(speed*2)*horiz*cos(angle), sqrt(speed*2)*vert*sin(angle));
+    timeTillNewBehavior -= elapsed;
+    if (timeTillNewBehavior < 0) {
+        [_delegate behaviorTimeoutExpiredForInstance:self];
+    }
     
-        if ([_delegate shouldBounce:movement forInstance:self]) {
+    if (horiz || vert) {
+        NSSize movement = NSMakeSize(sqrt(speed*2)*horiz*cos(angle) + origin.x,
+                                     sqrt(speed*2)*vert*sin(angle) + origin.y);
+
+        if (![_delegate wouldFitOnScreen:movement forInstance:self]) {
             NSSize newMovement = [_delegate makeBestBounce:movement forInstance:self];
         
             if (newMovement.width != movement.width)
@@ -155,12 +149,13 @@
             if (newMovement.height != movement.height)
                 vert *= -1;
         
-            movement = NSMakeSize(sqrt(speed*2)*horiz*cos(angle), sqrt(speed*2)*vert*sin(angle));
+            movement = NSMakeSize(sqrt(speed*2)*horiz*cos(angle) + origin.x,
+                                  sqrt(speed*2)*vert*sin(angle) + origin.y);
 
             //NSLog(@"Now pointing %s and %s, angle %lf", vert==up?"up":(vert==down?"down":"none"), horiz==left?"left":(horiz==right?"right":"none"), angle);
         }
-        origin.x += movement.width;
-        origin.y += movement.height;
+        origin.x = movement.width;
+        origin.y = movement.height;
     }
     
     

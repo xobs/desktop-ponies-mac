@@ -25,7 +25,7 @@ struct image {
 - (id)initWithPath:(NSString *)path {
     GifFileType *gif;
     int currentImage;
-    int previous_dispose = 0;
+    int frameSize;
     
     if (!(self = [super init]))
         return nil;
@@ -45,42 +45,43 @@ struct image {
     }
     
     totalFrames = gif->ImageCount;
+    size = NSMakeSize(gif->SWidth, gif->SHeight);
+    frameSize = gif->SWidth * gif->SHeight * sizeof(struct pixel);
     
     data = NSZoneMalloc(NULL, totalFrames * sizeof(struct image));
+    
+    /* Pre-allocate all pixel data, so we can deal with image disposal methods */
+    for (currentImage = 0; currentImage < totalFrames; currentImage++) {
+        data[currentImage].pixels = NSZoneMalloc(NULL, frameSize);
+        memset(data[currentImage].pixels, 0, frameSize);
+    }
     
     for (currentImage = 0; currentImage < totalFrames; currentImage++) {
         ColorMapObject *colorMap;
         SavedImage     *image;
         struct pixel   *pixels;
-        size_t          width;
-        size_t          height;
+        struct pixel   *pixel;
         unsigned int    x, y;
         int             bgColorIndex;
         int             colorCount;
         unsigned char  *raster;
-        struct pixel   *pixel;
         GifColorType   *lut;
         BOOL            interlace;
         int             interlacePass;
         int             interlaceDelta;
         int             block;
-        int             left, top;
+        int             width, height, left, top;
         int             dispose;
         
         colorMap        = gif->SColorMap;
-        image           = gif->SavedImages + currentImage;
+        image           = &gif->SavedImages[currentImage];
         width           = image->ImageDesc.Width;
         height          = image->ImageDesc.Height;
         left            = image->ImageDesc.Left;
         top             = image->ImageDesc.Top;
         dispose         = 0;
-        pixels          = NSZoneMalloc(NULL, gif->SWidth * gif->SHeight * sizeof(pixel));
-        pixel           = pixels;
+        pixels          = data[currentImage].pixels;
         bgColorIndex    = (gif->SColorMap==NULL) ? -1 : gif->SBackGroundColor;
-        raster          = image->RasterBits;
-        interlace       = image->ImageDesc.Interlace;
-        interlacePass   = 1;
-        interlaceDelta  = 8;
         
         if (colorMap) {
             lut         = colorMap->Colors;
@@ -95,9 +96,6 @@ struct image {
             lut = image->ImageDesc.ColorMap->Colors;
             colorCount = image->ImageDesc.ColorMap->ColorCount;
         }
-
-        size.width = width;
-        size.height = height;
         
         /* Defalt delay */
         data[currentImage].delay = 0;
@@ -106,14 +104,11 @@ struct image {
         for (block = 0; block < image->ExtensionBlockCount; block++) {
             ExtensionBlock *theBlock = image->ExtensionBlocks+block;
             int delay;
-#warning Get disposal / origin working!
             if (theBlock->ByteCount == 4 && theBlock->Function == 0xF9) {
-                delay = theBlock->Bytes[2]<<8 | theBlock->Bytes[1];
                 
-                if (delay > 1000 || delay < 0) {
-                    NSLog(@"Uh, what a strange delay. %d\n", delay);
-                    delay = 0;
-                }
+                // Unpack the delay
+                delay = (0xff00 & theBlock->Bytes[2]<<8) | (0xff & theBlock->Bytes[1]);
+                
                 // Convert GIF's centiseconds into milliseconds
                 data[currentImage].delay = delay*10;
                 
@@ -148,28 +143,24 @@ struct image {
              }
              */
         }
-
-        /* Handle disposal method */
-        if (previous_dispose == 1) {
-            memcpy(pixels, data[currentImage-1].pixels, gif->SWidth * gif->SHeight * sizeof(struct pixel));
-        }
-        else if (dispose == 2) {
-            memset(pixels, 0, gif->SWidth*gif->SHeight*sizeof(struct pixel));
-        }
-        else if (dispose == 3 && currentImage > 1) {
-            memcpy(pixels, data[currentImage-2].pixels, gif->SWidth * gif->SHeight * sizeof(struct pixel));
-        }
         
-        for (y=top; y<height; y++) {
-            pixel = pixels + (y*gif->SWidth)+left;
-            for (x=left; x<width; x++) {
+        raster          = image->RasterBits;
+        interlace       = image->ImageDesc.Interlace;
+        interlacePass   = 1;
+        interlaceDelta  = 8;
+
+        for (y=top; y<top+height; y++) {
+            pixel = &pixels[(y*gif->SWidth)+left];
+            for (x=left; x<left+width; x++) {
                 unsigned char colorIndex = *raster;
                 
                 if(colorIndex == bgColorIndex) {
-                    pixel->a = 0;
+                    /*
+                    pixel->a = 255;
                     pixel->r = 255;
                     pixel->g = 0;
                     pixel->b = 255;
+                    */
                 }
                 else if(colorIndex < colorCount) {
                     GifColorType *gifColor = lut+colorIndex;
@@ -180,7 +171,7 @@ struct image {
                     pixel->b = gifColor->Blue;
                 }
                 else {
-                    pixel->a = 0;
+                    pixel->a = 255;
                     pixel->r = 0;
                     pixel->g = 255;
                     pixel->b = 0;
@@ -215,7 +206,38 @@ struct image {
         
         /* Now an RGBA image is stored in *pixels */
         data[currentImage].pixels = pixels;
-        previous_dispose = dispose;
+        
+        
+        
+        /* asis disposal (normally disposal type 1, but assume it for now) */
+        if (/*dispose == 1 &&*/ currentImage+1 < totalFrames) {
+            memcpy(data[currentImage+1].pixels, pixels, frameSize);
+        }
+        
+        if (dispose == 2 && currentImage+1 < totalFrames) {
+            for (y=top; y<top+height; y++) {
+                pixel = &data[currentImage+1].pixels[(y*gif->SWidth)+left];
+                for (x=left; x<left+width; x++) {
+                    pixel->r = 0;
+                    pixel->g = 0;
+                    pixel->b = 0;
+                    pixel->a = 0;
+                    pixel++;
+                }
+            }
+        }
+        /* background disposal */
+        /*
+        if (dispose == 2 && currentImage+1 < totalFrames) {
+            memset(data[currentImage+1].pixels, 0, frameSize);
+        }
+         */
+        
+        /* previous frame disposal */
+        else if (dispose == 3 && currentImage > 0 && currentImage+1 < totalFrames) {
+            memcpy(data[currentImage+1].pixels, data[currentImage-1].pixels, frameSize);
+        }
+
     }
     
     DGifCloseFile(gif);

@@ -89,7 +89,9 @@ static long long getTimeMillis(void) {
                            @"Zecora",
                            nil];
     manager = [[NBPonyManager alloc] initWithPonyCollection:ponyCollection];
-    [manager addPonyNamed:@"Pinkie Pie"];
+    [manager addPonyNamed:@"Rarity"];
+    [manager redraw];
+    
     for (NSString *name in testPonies) {
         [manager addPonyNamed:name];
         [manager addPonyNamed:name];
