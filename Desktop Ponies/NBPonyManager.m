@@ -21,9 +21,11 @@
     _collection = [collection retain];
     
     // Allocate main interface window
-    mainWindow = [[NSWindow alloc] initWithContentRect:screenSize styleMask:NSTitledWindowMask|NSResizableWindowMask backing:NSBackingStoreBuffered defer:YES];
+    mainWindow = [[NSWindow alloc] initWithContentRect:screenSize styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:YES];
     [mainWindow setOpaque:NO];
     [mainWindow setBackgroundColor:[NSColor clearColor]];
+    [mainWindow setLevel:NSMainMenuWindowLevel];
+    [mainWindow setIgnoresMouseEvents:YES];
 
     // Allocate the OpenGL view
     mainView = [[NBPonyGLView alloc] initWithFrame:[mainWindow contentRectForFrameRect:screenSize]];
@@ -38,10 +40,15 @@
 - (BOOL)addPonyNamed:(NSString *)name
 {
     NBPony *p = [_collection ponyNamed:name];
-    NBPonyInstance *i;
     if (!p)
         return NO;
+    return [self addPony:p];
+}
     
+- (BOOL)addPony:(NBPony *)p
+{
+    NBPonyInstance *i;
+
     i = [[NBPonyInstance alloc] initWithPony:p];
     if (!i)
         return NO;

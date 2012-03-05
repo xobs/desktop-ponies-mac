@@ -42,6 +42,10 @@
     return 0;
 }
 
+- (NSArray *)allPonies {
+    return [ponies allValues];
+}
+
 - (NSString *)description
 {
     return [NSString stringWithFormat:@"NBPonyCollection with %d ponies", [ponies count]];

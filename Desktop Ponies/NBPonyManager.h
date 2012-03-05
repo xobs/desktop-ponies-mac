@@ -22,6 +22,7 @@
 
 - (NBPonyManager *)initWithPonyCollection:(NBPonyCollection *)collection;
 - (BOOL)addPonyNamed:(NSString *)name;
+- (BOOL)addPony:(NBPony *)pony;
 - (NBPonyInstance *)ponyNamed:(NSString *)name;
 - (BOOL)removePony:(NBPony *)pony;
 - (BOOL)removePonyNamed:(NSString *)name;

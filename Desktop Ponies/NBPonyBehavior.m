@@ -261,6 +261,11 @@ enum field_names {
     return _movementType;
 }
 
+- (NSString *)description
+{
+    return _name;
+}
+
 - (double)randomTimeout
 {
     double t = (random()/(double)RAND_MAX)*(_maxDuration-_minDuration)+_minDuration;

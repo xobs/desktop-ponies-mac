@@ -16,5 +16,6 @@
 
 - (int)loadPonies:(NSString *)path;
 - (NBPony *)ponyNamed:(NSString *)name;
+- (NSArray *)allPonies;
 
 @end
