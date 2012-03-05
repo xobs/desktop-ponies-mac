@@ -27,6 +27,9 @@
     NSUInteger totalBehaviors = [behaviors count];
     NSMutableArray *array = [NSMutableArray array];
     
+    origin.x += [self imageCenter].x;
+    origin.y += [self imageCenter].y;
+
     /* First, figure out the total probability of behaviors that are appropriate */
     double probability = 0;
     for (NBPonyBehavior *b in behaviors) {
@@ -52,10 +55,16 @@
         value -= [p probability];
         if (value < 0) {
             _behavior = p;
+            if ([self imageCenter].x || [self imageCenter].y) {
+                NSLog(@"Adding (%lf, %lf) to origin (%lf, %lf)\n", [self imageCenter].x, [self imageCenter].y, origin.x, origin.y);
+                origin.x -= [self imageCenter].x;
+                origin.y -= [self imageCenter].y;
+            }
             break;
         }
     }
 
+    NSLog(@"Starting behavior %@\n",  _behavior);
     currentFrame = 0;
 
     [self didChangeBehavior];    

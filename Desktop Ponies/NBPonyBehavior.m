@@ -271,6 +271,11 @@ enum field_names {
     return _name;
 }
 
+- (NSPoint)offset
+{
+    return _position;
+}
+
 - (double)randomTimeout
 {
     double t = (random()/(double)RAND_MAX)*(_maxDuration-_minDuration)+_minDuration;

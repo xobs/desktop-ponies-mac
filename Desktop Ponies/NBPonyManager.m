@@ -177,6 +177,10 @@
     
     testRect.origin = [instance origin];
     testRect.size = [[instance image] size];
+    if ([instance imageCenter].x || [instance imageCenter].y) {
+        testRect.origin.x -= [instance imageCenter].x;
+        testRect.origin.y -= [instance imageCenter].y;
+    }
     if (![self wouldFitOnScreen:testRect forInstance:instance])
         return NO;
             

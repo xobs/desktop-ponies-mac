@@ -53,6 +53,7 @@
 - (NSPoint)leftImageCenter;
 - (NSPoint)rightImageCenter;
 - (NSString *)linkedBehavior;
+- (NSPoint)offset;
 
 - (double)probability;
 - (double)speed;
