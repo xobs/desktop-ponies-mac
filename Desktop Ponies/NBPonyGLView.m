@@ -78,9 +78,9 @@
         // Bind the texture using GL_TEXTURE_RECTANGLE_NV
         glBindTexture( GL_TEXTURE_RECTANGLE_ARB, textureID );
     
-        // Enable bilinear filtering on this texture
-        //glTexParameteri( GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
-        //glTexParameteri( GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+        // Enable nearest-neighbor filtering on this texture
+        glTexParameteri( GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+        glTexParameteri( GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
     
         // Write the 32-bit RGBA texture buffer to video memory
         glTexImage2D( GL_TEXTURE_RECTANGLE_ARB, 0, GL_RGBA,
