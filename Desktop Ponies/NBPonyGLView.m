@@ -90,18 +90,13 @@
         [sequence setTextureId:textureID forFrame:frame];
     }
     
-    
+    // Enable alpha blending
     glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
-	glEnable(GL_TEXTURE_2D);
-    
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
 	// Bind the texture to the polygons
 	glBindTexture(GL_TEXTURE_RECTANGLE_ARB, textureID);
     
-    
-    
-	glPushMatrix();
     
 	glLoadIdentity();
 	glTranslatef(x, y, 0);
@@ -131,9 +126,7 @@
     
     glTexCoord2i([sequence width], 0);
     glVertex2i([sequence width], 0);
-	glEnd();
-    
-	glPopMatrix();
+	glEnd();    
 }
 
 // per-window timer function, basic time based animation preformed here
@@ -173,6 +166,8 @@
 	// we are finished rendering in 2D
 	glDisable( GL_DEPTH_TEST );
 	glDisable( GL_LIGHTING );
+    
+    glEnable(GL_BLEND);
 }
 
 #pragma mark -
