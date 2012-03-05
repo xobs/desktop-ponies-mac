@@ -33,15 +33,17 @@ static long long getTimeMillis(void) {
     NSLog(@"Pony collection: %@", ponyCollection);
     
     // Add all these ponies to the manager
-    NSArray *testPonies = [NSArray arrayWithObjects:/*@"Rainbow Dash", @"Pinkie Pie", @"Fluttershy",
-                           @"Twilight Sparkle", @"Rarity",*/ @"Applejack", /*@"Derpy Hooves", 
-                           @"Vinyl Scratch",*/
+    NSArray *testPonies = [NSArray arrayWithObjects:@"Rainbow Dash", @"Pinkie Pie", @"Fluttershy",
+                           @"Twilight Sparkle", @"Rarity", @"Applejack", @"Derpy Hooves", 
+                           @"Vinyl Scratch",
                            nil];
     manager = [[NBPonyManager alloc] initWithPonyCollection:ponyCollection];
     
     for (NSString *name in testPonies) {
         [manager addPonyNamed:name];
     }
+    for (NBPony *p in [ponyCollection allPonies])
+        [manager addPony:p];
 
     [manager redraw];
     last = getTimeMillis();

@@ -56,7 +56,6 @@
         }
     }
 
-    NSLog(@"Picked behavior %@\n", _behavior);
     currentFrame = 0;
 
     [self didChangeBehavior];    
