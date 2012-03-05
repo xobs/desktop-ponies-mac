@@ -43,15 +43,20 @@
         origin = NSMakePoint(200, 200);
         return [self startRandomBehavior];
     }
+    
     /* Next, pick a random number between 0 and the total */
     double value = random()/(double)RAND_MAX*probability;
 
-    int i;
     totalBehaviors = [array count]-1;
-    for (i=0; i<totalBehaviors && value > 0; i++)
-        value -= [[array objectAtIndex:i] probability];
+    for (NBPonyBehavior *p in array) {
+        value -= [p probability];
+        if (value < 0) {
+            _behavior = p;
+            break;
+        }
+    }
     
-    _behavior = [array objectAtIndex:i];    
+    NSLog(@"Picked behavior %@\n", _behavior);
     currentFrame = 0;
 
     [self didChangeBehavior];    
