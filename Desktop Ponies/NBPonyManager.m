@@ -140,8 +140,11 @@
          
 - (NSSize)makeBestBounce:(NSSize)delta forInstance:(NBPonyInstance *)instance
 {
-    NSRect screenSize = [[NSScreen mainScreen] visibleFrame];
-    NSRect f = [mainView frame];
+    NSRect screenSize = [mainView frame];
+    NSRect f;
+    
+    f.size = [[instance image] size];
+    f.origin = [instance origin];
     f.origin.x += delta.width;
     f.origin.y += delta.height;
             
