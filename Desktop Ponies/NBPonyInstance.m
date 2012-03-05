@@ -43,7 +43,7 @@
      * at the center and try again
      */
     if (![array count]) {
-        origin = NSMakePoint(200, 200);
+        origin = NSMakePoint(400, 400);
         return [self startRandomBehavior];
     }
     
@@ -55,13 +55,14 @@
         value -= [p probability];
         if (value < 0) {
             _behavior = p;
-            if ([self imageCenter].x || [self imageCenter].y) {
-                NSLog(@"Adding (%lf, %lf) to origin (%lf, %lf)\n", [self imageCenter].x, [self imageCenter].y, origin.x, origin.y);
-                origin.x -= [self imageCenter].x;
-                origin.y -= [self imageCenter].y;
-            }
             break;
         }
+    }
+
+    if ([self imageCenter].x || [self imageCenter].y) {
+        NSLog(@"Adding (%lf, %lf) to origin (%lf, %lf)\n", [self imageCenter].x, [self imageCenter].y, origin.x, origin.y);
+        origin.x -= [self imageCenter].x;
+        origin.y -= [self imageCenter].y;
     }
 
     NSLog(@"Starting behavior %@\n",  _behavior);
@@ -73,13 +74,13 @@
 
 - (NBPonyBehavior *)startBehavior:(NBPonyBehavior *)behavior
 {
-    origin.x += [self imageCenter].x;
-    origin.y += [self imageCenter].y;
+    origin.x -= [self imageCenter].x;
+    origin.y -= [self imageCenter].y;
 
     _behavior = behavior;
 
-    origin.x -= [self imageCenter].x;
-    origin.y -= [self imageCenter].y;
+    origin.x += [self imageCenter].x;
+    origin.y += [self imageCenter].y;
 
     currentFrame = 0;
     [self didChangeBehavior];
