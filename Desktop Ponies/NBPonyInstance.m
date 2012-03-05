@@ -143,8 +143,13 @@
     if (horiz || vert) {
         NSSize movement = NSMakeSize(sqrt(speed*2)*horiz*cos(angle) + origin.x,
                                      sqrt(speed*2)*vert*sin(angle) + origin.y);
-
-        if (![_delegate wouldFitOnScreen:movement forInstance:self]) {
+        
+        NSRect testRect;
+        testRect.origin.x = movement.width;
+        testRect.origin.y = movement.height;
+        testRect.size = [[self image] size];
+        
+        if (![_delegate wouldFitOnScreen:testRect forInstance:self]) {
             NSSize newMovement = [_delegate makeBestBounce:movement forInstance:self];
         
             if (newMovement.width != movement.width)

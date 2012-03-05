@@ -86,7 +86,7 @@
 - (void)behaviorTimeoutExpiredForInstance:(NBPonyInstance *)instance;
 - (BOOL)shouldBounce:(NSSize)delta forInstance:(NBPonyInstance *)instance;
 - (NSSize)makeBestBounce:(NSSize)delta forInstance:(NBPonyInstance *)instance;
-- (BOOL)wouldFitOnScreen:(NSSize)newSize forInstance:(NBPonyInstance *)instance;
+- (BOOL)wouldFitOnScreen:(NSRect)imageSize forInstance:(NBPonyInstance *)instance;
 
 - (BOOL)behaviorIsAppropriate:(NBPonyBehavior *)behavior forInstance:(NBPonyInstance *)instance;
 

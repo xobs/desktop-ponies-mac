@@ -126,14 +126,16 @@
 }
          
 
-- (BOOL)wouldFitOnScreen:(NSSize)delta forInstance:(NBPonyInstance *)instance
+- (BOOL)wouldFitOnScreen:(NSRect)imageSize forInstance:(NBPonyInstance *)instance
 {
     NSRect screenSize = [mainView frame];
-    NSRect f = NSMakeRect([instance origin].x, [instance origin].y, [[instance image] width], [[instance image] height]);
-    if (f.origin.x < 0
-        || f.origin.y < 0
-        || f.origin.x + f.size.width > screenSize.size.width + screenSize.origin.x
-        || f.origin.y + f.size.height > screenSize.size.height + screenSize.origin.y)
+    if (imageSize.origin.x < 0)
+        return NO;
+    if (imageSize.origin.y < 0)
+        return NO;
+    if (imageSize.origin.x + imageSize.size.width > screenSize.size.width + screenSize.origin.x)
+        return NO;
+    if (imageSize.origin.y + imageSize.size.height > screenSize.size.height + screenSize.origin.y)
         return NO;
     return YES;
 }
@@ -145,8 +147,6 @@
     
     f.size = [[instance image] size];
     f.origin = [instance origin];
-    f.origin.x += delta.width;
-    f.origin.y += delta.height;
             
     if (f.origin.x < screenSize.origin.x)
         delta.width *= -1;
@@ -163,13 +163,16 @@
          
 - (BOOL)behaviorIsAppropriate:(NBPonyBehavior *)behavior forInstance:(NBPonyInstance *)instance
 {
+    NSRect testRect;
     if ([behavior shouldSkip])
         return NO;
             
     if ([behavior movementFlags] >= 8)
         return NO;
-            
-    if (![self wouldFitOnScreen:[[behavior leftImage] size] forInstance:instance])
+    
+    testRect.origin = [instance origin];
+    testRect.size = [[instance image] size];
+    if (![self wouldFitOnScreen:testRect forInstance:instance])
         return NO;
             
     return YES;
