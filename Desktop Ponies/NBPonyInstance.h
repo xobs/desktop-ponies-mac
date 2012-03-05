@@ -49,8 +49,11 @@
 }
 
 - (NBPonyInstance *)initWithPony:(NBPony *)pony;
+
 - (NBPonyBehavior *)startRandomBehavior;
 - (NBPonyBehavior *)startBehavior:(NBPonyBehavior *)behavior;
+- (NBPonyBehavior *)behavior;
+
 - (NBPonyBehavior *)behavior;
 - (NSString *)imagePath;
 - (NBGraphicsSequence *)image;
@@ -73,6 +76,7 @@
 
 - (NSPoint)origin;
 - (void)setOrigin:(NSPoint)pt;
+
 
 @end
 

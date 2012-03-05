@@ -75,7 +75,7 @@ enum field_names {
         _movementType = 0;
     }
 
-    if ([array count] > linked_behavior && [[array objectAtIndex:linked_behavior] isEqualToString:@""])
+    if ([array count] > linked_behavior && ![[array objectAtIndex:linked_behavior] isEqualToString:@""])
         _linkedBehavior = [[array objectAtIndex:linked_behavior] copy];
     else
         _linkedBehavior = nil;
@@ -254,6 +254,11 @@ enum field_names {
 - (BOOL)shouldSkip
 {
     return _skip;
+}
+
+- (NSString *)linkedBehavior
+{
+    return _linkedBehavior;
 }
 
 - (int)movementFlags

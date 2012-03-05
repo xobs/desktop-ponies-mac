@@ -55,7 +55,7 @@
             break;
         }
     }
-    
+
     NSLog(@"Picked behavior %@\n", _behavior);
     currentFrame = 0;
 
@@ -65,8 +65,8 @@
 
 - (NBPonyBehavior *)startBehavior:(NBPonyBehavior *)behavior
 {
-    // XXX Check to make sure [behavior] is in [_pony behaviors].
     _behavior = behavior;
+    currentFrame = 0;
     [self didChangeBehavior];
     return _behavior;
 }

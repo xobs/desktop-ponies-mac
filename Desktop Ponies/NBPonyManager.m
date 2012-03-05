@@ -117,7 +117,12 @@
 
 - (void)behaviorTimeoutExpiredForInstance:(NBPonyInstance *)instance
 {
-    [instance startRandomBehavior];
+    if ([[instance behavior] linkedBehavior] != nil) {
+        [instance startBehavior:[[instance pony] behaviorNamed:[[instance behavior] linkedBehavior]]];
+    }
+    else {
+        [instance startRandomBehavior];
+    }
 }
          
 

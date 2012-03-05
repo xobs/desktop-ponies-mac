@@ -52,6 +52,7 @@
 - (NBGraphicsSequence *)rightImage;
 - (NSPoint)leftImageCenter;
 - (NSPoint)rightImageCenter;
+- (NSString *)linkedBehavior;
 
 - (double)probability;
 - (double)speed;

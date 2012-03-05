@@ -250,6 +250,8 @@ struct image {
 }
 
 - (void *)dataForFrame:(int)frame {
+    if (frame >= totalFrames)
+        NSLog(@"ERROR: Frame number too large (%d >= %d)\n", frame, totalFrames);
     return data[frame].pixels;
 }
 
@@ -266,15 +268,21 @@ struct image {
 }
 
 - (unsigned int)textureIdForFrame:(int)frame {
+    if (frame >= totalFrames)
+        NSLog(@"ERROR: Frame number too large (%d >= %d)\n", frame, totalFrames);
     return data[frame].texId;
 }
 
 - (void)setTextureId:(unsigned int)tex forFrame:(int)frame
 {
+    if (frame >= totalFrames)
+        NSLog(@"ERROR: Frame number too large (%d >= %d)\n", frame, totalFrames);
     data[frame].texId = tex;
 }
 
 - (int)delayForFrame:(int)frame {
+    if (frame >= totalFrames)
+        NSLog(@"ERROR: Frame number too large (%d >= %d)\n", frame, totalFrames);
     return data[frame].delay;
 }
 
