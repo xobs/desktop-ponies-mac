@@ -177,6 +177,9 @@
     return [_behaviors objectForKey:name];
 }
 
+- (NSString *)description {
+    return _name;
+}
 
 @end
 
