@@ -73,7 +73,14 @@
 
 - (NBPonyBehavior *)startBehavior:(NBPonyBehavior *)behavior
 {
+    origin.x += [self imageCenter].x;
+    origin.y += [self imageCenter].y;
+
     _behavior = behavior;
+
+    origin.x -= [self imageCenter].x;
+    origin.y -= [self imageCenter].y;
+
     currentFrame = 0;
     [self didChangeBehavior];
     return _behavior;
