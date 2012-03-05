@@ -99,6 +99,11 @@
     return NO;
 }
 
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"NBPonyManager with %d active ponies", [_active count]];
+}
+
 - (int)tickAll:(long long)elapsed
 {
     for (NBPonyInstance *i in _active)

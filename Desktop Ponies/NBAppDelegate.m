@@ -42,11 +42,11 @@ static long long getTimeMillis(void) {
     for (NSString *name in testPonies) {
         [manager addPonyNamed:name];
     }
-    for (NBPony *p in [ponyCollection allPonies])
-        [manager addPony:p];
-
+    
     [manager redraw];
     last = getTimeMillis();
+    
+    NSLog(@"Pony manager: %@", manager);
     
     // start animation timer
 	tickTimer = [NSTimer timerWithTimeInterval:(1.0f/30.0f) target:self selector:@selector(doTick:) userInfo:nil repeats:YES];
