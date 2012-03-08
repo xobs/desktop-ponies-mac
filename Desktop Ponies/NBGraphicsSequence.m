@@ -278,6 +278,9 @@ struct image {
     if (frame >= totalFrames)
         NSLog(@"ERROR: Frame number too large (%d >= %d)\n", frame, totalFrames);
     data[frame].texId = tex;
+    bzero(data[frame].pixels, size.width*size.height*4);
+    NSZoneFree(NULL, data[frame].pixels);
+    data[frame].pixels = NULL;
 }
 
 - (int)delayForFrame:(int)frame {
