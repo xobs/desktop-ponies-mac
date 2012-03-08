@@ -60,12 +60,10 @@
     }
 
     if ([self imageCenter].x || [self imageCenter].y) {
-        NSLog(@"Adding (%lf, %lf) to origin (%lf, %lf)\n", [self imageCenter].x, [self imageCenter].y, origin.x, origin.y);
         origin.x -= [self imageCenter].x;
         origin.y -= [self imageCenter].y;
     }
 
-    NSLog(@"Starting behavior %@\n",  _behavior);
     currentFrame = 0;
 
     [self didChangeBehavior];    
@@ -82,7 +80,6 @@
     origin.x += [self imageCenter].x;
     origin.y += [self imageCenter].y;
 
-    currentFrame = 0;
     [self didChangeBehavior];
     return _behavior;
 }
@@ -140,6 +137,10 @@
     
     // Add a timer to move to a new behavior after this one ends.
     timeTillNewBehavior = [_behavior randomTimeout]*1000;
+
+    // Reset animation
+    currentFrame = 0;
+    frameMillisLeft = [[self image] delayForFrame:currentFrame];
 }
 
 #pragma mark -
@@ -176,8 +177,6 @@
         
             movement = NSMakeSize(sqrt(speed*2)*horiz*cos(angle) + origin.x,
                                   sqrt(speed*2)*vert*sin(angle) + origin.y);
-
-            //NSLog(@"Now pointing %s and %s, angle %lf", vert==up?"up":(vert==down?"down":"none"), horiz==left?"left":(horiz==right?"right":"none"), angle);
         }
         origin.x = movement.width;
         origin.y = movement.height;
@@ -185,15 +184,15 @@
     
     
     while (elapsed > 0 && [[self image] delayForFrame:currentFrame]) {
-        if (elapsed > millisLeft) {
-            elapsed -= millisLeft;
+        if (elapsed > frameMillisLeft) {
+            elapsed -= frameMillisLeft;
             currentFrame++;
             if (currentFrame >= [[self image] totalFrames])
                 currentFrame = 0;
-            millisLeft = [[self image] delayForFrame:currentFrame];
+            frameMillisLeft = [[self image] delayForFrame:currentFrame];
         }
         else {
-            millisLeft -= elapsed;
+            frameMillisLeft -= elapsed;
             elapsed = 0;
         }
     }

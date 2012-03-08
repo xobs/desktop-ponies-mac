@@ -43,7 +43,7 @@
     
     NBGraphicsSequence *graphic;
     
-    int millisLeft;
+    int frameMillisLeft;
     int currentFrame;
     int timeTillNewBehavior;
 }
