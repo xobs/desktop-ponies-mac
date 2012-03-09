@@ -39,9 +39,8 @@ static long long getTimeMillis(void) {
                            nil];
     manager = [[NBPonyManager alloc] initWithPonyCollection:ponyCollection];
     
-    for (NSString *name in testPonies) {
+    for (NSString *name in testPonies)
         [manager addPonyNamed:name];
-    }
     
     [manager redraw];
     last = getTimeMillis();

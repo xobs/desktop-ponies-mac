@@ -16,11 +16,18 @@
 @interface NBPonyGLView : NSOpenGLView {        
     NSTimer* timer;
     NSMutableArray *instances;
+    id mouseMonitor;
+    CFMachPortRef mouseHook;
+    CFRunLoopSourceRef mouseHookSource;
+    
+    NSWindow *interactionWindow;
+    id interactionView;
 }
 
 - (void)startup;
 - (void)redraw;
 
+- (NSArray *)instances;
 - (void)drawInstance:(NBPonyInstance *)instance;
 - (void)addPonyInstance:(NBPonyInstance *)instance;
 - (void)removePonyInstance:(NBPonyInstance *)instance;

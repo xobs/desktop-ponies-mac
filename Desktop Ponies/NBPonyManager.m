@@ -62,7 +62,7 @@
 }
 
 - (void)redraw {
-    [mainView redraw];
+//    [mainView redraw];
 }
 
 - (NBPonyInstance *)ponyNamed:(NSString *)name
@@ -152,17 +152,17 @@
     
     f.size = [[instance image] size];
     f.origin = [instance origin];
-            
-    if (f.origin.x < screenSize.origin.x)
+    
+    if (f.origin.x < screenSize.origin.x && delta.width < 0)
         delta.width *= -1;
-    else if (f.origin.x + f.size.width > screenSize.size.width + screenSize.origin.x)
+    else if (f.origin.x + f.size.width > screenSize.size.width + screenSize.origin.x && delta.width > 0)
         delta.width *= -1;
-        
-    if (f.origin.y < screenSize.origin.y)
+    
+    if (f.origin.y < screenSize.origin.y && delta.height < 0)
         delta.height *= -1;
-    else if (f.origin.y + f.size.height > screenSize.size.height + screenSize.origin.y)
+    else if (f.origin.y + f.size.height > screenSize.size.height + screenSize.origin.y && delta.height > 0)
         delta.height *= -1;
-            
+    
     return delta;
 }
          

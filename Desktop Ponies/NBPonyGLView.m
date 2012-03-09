@@ -10,6 +10,64 @@
 #import "NBPonyGLView.h"
 #import "NBGraphicsSequence.h"
 
+CGEventRef monitorMouseTap(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *refcon);
+
+
+/*
+    NSPoint aPoint = [NSEvent mouseLocation];
+    NSRect screen = [[NSScreen mainScreen] frame];
+    aPoint.x = aPoint.x + screen.origin.x;
+    aPoint.y = [self frame].size.height - aPoint.y + screen.origin.y;
+    
+    for (NBPonyInstance *i in instances) {
+        NSPoint origin = [i origin];
+        NSSize size = [[i image] size];
+        if (aPoint.x > origin.x
+            && aPoint.x < origin.x + size.width
+            && aPoint.y > origin.y
+            && aPoint.y < origin.y + size.height) {
+            NSLog(@"Hit pony %@\n", [i pony]);
+            
+            [[self window] setIgnoresMouseEvents:NO];
+            return event;
+        }
+    }
+    [[self window] setIgnoresMouseEvents:YES];
+    //NSLog(@"Hit nopony\n");
+    
+    return event;
+}
+*/
+
+
+@interface NBPonyInteractionView : NSView {
+}
+@end
+
+
+
+@implementation NBPonyInteractionView
+
+
+- (void)drawRect:(NSRect)dirtyRect {
+    static int first = 5;
+    if (first > 0) {
+        first--;
+        return;
+    }
+    NSBezierPath *bp = [NSBezierPath bezierPathWithRect:dirtyRect];
+    [[NSColor colorWithCalibratedRed:.5 green:.5 blue:.5 alpha:.05] set];
+    [bp fill];
+}
+
+- (void)drawPad:(NSRect)rect {
+    [self setNeedsDisplayInRect:rect];
+}
+
+@end
+
+
+
 @implementation NBPonyGLView
 
 
@@ -24,6 +82,10 @@
     [instances removeObject:instance];
 }
 
+- (NSArray *)instances {
+    return instances;
+}
+
 #pragma mark ---- OpenGL Utils ----
 // ---------------------------------
 
@@ -34,6 +96,7 @@
     NSOpenGLPixelFormatAttribute attributes [] = {
         NSOpenGLPFAWindow,
         NSOpenGLPFADoubleBuffer,	// double buffered
+        NSOpenGLPFAPixelBuffer,
         NSOpenGLPFADepthSize, (NSOpenGLPixelFormatAttribute)16, // 16 bit depth buffer
         (NSOpenGLPixelFormatAttribute)nil
     };
@@ -50,6 +113,8 @@
     float scaleY = 1.0;
     float x = origin.x;
     float y = origin.y;
+    float width = [sequence width];
+    float height = [sequence height];
     
     // Disable lighting
 	//glDisable( GL_LIGHTING );
@@ -118,15 +183,17 @@
     glTexCoord2i(0, 0);
     glVertex2i(0, 0);
     
-    glTexCoord2i(0, [sequence height]);
-    glVertex2i(0, [sequence height]);
+    glTexCoord2i(0, height);
+    glVertex2i(0, height);
     
-    glTexCoord2i([sequence width], [sequence height]);
-    glVertex2i([sequence width], [sequence height]);
+    glTexCoord2i(width, height);
+    glVertex2i(width, height);
     
-    glTexCoord2i([sequence width], 0);
-    glVertex2i([sequence width], 0);
-	glEnd();    
+    glTexCoord2i(width, 0);
+    glVertex2i(width, 0);
+	glEnd();
+    
+    [interactionView drawPad:NSMakeRect(x, [self frame].size.height-y, width, height)];
 }
 
 // per-window timer function, basic time based animation preformed here
@@ -201,8 +268,23 @@
 
 - (void)startup
 {
+    NSRect screenSize = [[NSScreen mainScreen] visibleFrame];
     instances = [[NSMutableArray alloc] init];
     glClearColor(0.0, 0.0, 0.0, 0.0);
+    
+    /*
+    interactionWindow = [[NSWindow alloc] initWithContentRect:screenSize styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:YES];
+    [interactionWindow setOpaque:NO];
+    [interactionWindow setBackgroundColor:[NSColor colorWithCalibratedRed:.5 green:.5 blue:.5 alpha:.049]];
+    [interactionWindow setLevel:NSMainMenuWindowLevel];
+    
+    interactionView = [[NBPonyInteractionView alloc] initWithFrame:[interactionWindow contentRectForFrameRect:screenSize]];
+    
+    [interactionWindow setContentView:interactionView];
+    [interactionWindow makeKeyAndOrderFront:self];
+     */
 }
+         
+
 
 @end

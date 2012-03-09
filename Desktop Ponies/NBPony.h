@@ -29,6 +29,7 @@
 - (NBPonyBehavior *)behaviorNamed:(NSString *)name;
 - (NSArray *)behaviorsAsArray;
 - (NSString *)name;
+- (NSString *)description;
 - (double)scale;
 
 @end

@@ -199,6 +199,8 @@ enum field_names {
     else
         _probability = 0;
     
+    if ([_name isEqualToString:@"warp1"])
+        NSLog(@"Processing warp1");
     
     return self;
 }
